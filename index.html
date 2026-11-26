@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="artifact-type" content="tool">
   <meta name="design-style" content="carbon">
-  <title>EduEnroll Technical Admission Portal — Engineering &amp; Polytechnic 2026–27</title>
+  <title>Polytechnic &amp; Engineering Admission Portal</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
   <style>
@@ -911,8 +911,8 @@
       <div class="brand-block">
         <div class="brand-mark" aria-hidden="true">EE</div>
         <div>
-          <div class="brand-name">EduEnroll Technical Admission Portal</div>
-          <div class="brand-sub">Engineering &amp; Polytechnic Admissions · 2026–27 Cycle</div>
+          <div class="brand-name">Polytechnic & Engineering Admission Portal</div>
+          <div class="brand-sub">Engineering &amp; Polytechnic Admissions Portal</div>
         </div>
       </div>
 
@@ -948,7 +948,7 @@
       <div class="portal-intro">
         <div>
           <div class="intro-meta">
-            <span class="carbon-tag">Session 2026–27</span>
+            <span class="carbon-tag">Admission Portal</span>
             <span class="carbon-tag tag-neutral">AICTE / State Board Norms</span>
             <span class="carbon-tag tag-positive" id="global-save-badge">Progress Saved</span>
           </div>
@@ -1534,9 +1534,9 @@
         <article class="receipt-sheet" id="receipt-printable" aria-label="Digital Admission Fee Receipt">
           <div class="receipt-head">
             <div>
-              <div class="label-mono">EduEnroll Technical Admission Portal · Verified E-Receipt</div>
+              <div class="label-mono">Polytechnic & Engineering Admission Portal · Verified E-Receipt</div>
               <h3 class="subhead" style="margin-top: var(--space-xs);">Provisional Admission &amp; Fee Remittance Voucher</h3>
-              <div class="helper-text">Academic Session 2026–27 · AICTE / State Technical Board Affiliated</div>
+              <div class="helper-text">AICTE / State Technical Board Affiliated</div>
             </div>
             <div style="text-align: right;">
               <span class="carbon-tag tag-positive" id="rcpt-status-badge">PAID &amp; VERIFIED</span>
@@ -1734,7 +1734,7 @@
         <!-- Important Dates & Counselling Schedule -->
         <div class="layer">
           <span class="label-mono">Admission Calendar</span>
-          <h3 class="subhead" style="margin: var(--space-xs) 0 var(--space-md) 0;">2026–27 Cycle &amp; Special Round Schedule</h3>
+          <h3 class="subhead" style="margin: var(--space-xs) 0 var(--space-md) 0;">Admission Cycle &amp; Special Round Schedule</h3>
           <div class="data-table-wrap">
             <table class="data-table">
               <thead>
@@ -1793,7 +1793,7 @@
 
   <footer class="portal-footer no-print">
     <div>
-      <strong>EduEnroll Technical Admission Portal</strong> · Session 2026–27 · Built in British English with grounded Polytechnic &amp; Lateral Entry norms.
+      <strong>Polytechnic & Engineering Admission Portal</strong>  · Built in British English with grounded Polytechnic &amp; Lateral Entry norms.
     </div>
     <div class="mono-num">
       State &amp; AICTE Fee Norms · UGC Anti-Ragging Compliant
@@ -2554,7 +2554,7 @@
         statusStage: appState.receipt ? 4 : 2, // Submitted & Auto-Verified digitally
         seatModel: appState.feeConfig.seatModel === `government` ? `Government Polytechnic` : `Autonomous Institute`,
         submittedDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        remarks: `Submitted via EduEnroll Portal. Academic marks & scanned enclosures verified digitally. Ready for fee remittance.`,
+        remarks: `Submitted via Polytechnic Admission Desk Portal. Academic marks & scanned enclosures verified digitally. Ready for fee remittance.`,
         paidAmount: appState.receipt ? appState.receipt.totalPaid : 0,
         txnRef: appState.receipt ? appState.receipt.txnRef : `PENDING`,
         isSample: false
