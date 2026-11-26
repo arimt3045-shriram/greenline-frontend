@@ -1,0 +1,3256 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="carbon">
+  <title>EduEnroll Technical Admission Portal — Engineering &amp; Polytechnic 2026–27</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Carbon) */
+      --background: #ffffff;
+      --surface-container-low: #f4f4f4;
+      --surface-container: #f4f4f4;
+      --surface-container-high: #e0e0e0;
+
+      /* Ink */
+      --on-surface: #161616;
+      --on-surface-variant: #525252;
+
+      /* Rules */
+      --outline: #8d8d8d;
+      --outline-variant: #e0e0e0;
+
+      /* Accents */
+      --primary: #0f62fe;
+      --primary-hover: #0353e9;
+      --on-primary: #ffffff;
+      --primary-container: #d0e2ff;
+      --on-primary-container: #161616;
+      --secondary: #6f6f6f;
+      --tertiary: #198038;
+      --error: #da1e28;
+      --on-error: #ffffff;
+
+      /* Semantic containers */
+      --positive: #198038;
+      --positive-container: #defbe6;
+      --warning: #b28600;
+      --warning-container: #fcf4d6;
+      --error-container: #fff1f1;
+
+      /* Data series */
+      --data-1: #0f62fe;
+      --data-2: #6929c4;
+      --data-3: #005d5d;
+      --data-4: #9f1853;
+      --data-context: #8d8d8d;
+
+      /* Fonts */
+      --font-headline: 'IBM Plex Sans', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+      --font-label: 'IBM Plex Mono', monospace;
+
+      /* Shape */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.25rem;
+      --rounded-full: 0.75rem;
+
+      /* Style effects */
+      --shadow-1: 0 2px 6px rgba(0, 0, 0, 0.1);
+      --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --rule: 1px solid var(--outline-variant);
+      --field-rule: 1px solid var(--outline);
+      --indicator: 2px solid var(--primary);
+
+      /* Focus ring */
+      --focus: var(--primary);
+
+      /* Type scale (Focused Tool) */
+      --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1240px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Focus rings */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Typography helpers */
+    .label-mono {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--on-surface-variant);
+    }
+    .mono-num {
+      font-family: var(--font-label);
+      font-variant-numeric: tabular-nums;
+    }
+    .headline-split {
+      font-family: var(--font-headline);
+      font-weight: 300;
+      font-size: var(--display-size);
+      line-height: 1.15;
+      letter-spacing: 0;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .headline-split strong { font-weight: 600; }
+    .section-title {
+      font-family: var(--font-headline);
+      font-weight: 300;
+      font-size: var(--headline-size);
+      line-height: 1.25;
+      margin: 0;
+    }
+    .section-title strong { font-weight: 600; }
+    .subhead {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--subhead-size);
+      line-height: 1.3;
+      margin: 0;
+    }
+    .helper-text {
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+      margin: var(--space-xs) 0 0 0;
+    }
+
+    /* Top Header & Portal Navigation */
+    .portal-header {
+      border-bottom: var(--rule);
+      background: var(--background);
+    }
+    .portal-header-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      background: var(--on-surface);
+      color: var(--background);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      border-bottom: 3px solid var(--primary);
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-weight: 600;
+      font-size: 1.0625rem;
+      line-height: 1.2;
+      color: var(--on-surface);
+    }
+    .brand-sub {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .portal-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .nav-btn {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      color: var(--on-surface-variant);
+      padding: var(--space-sm) var(--space-md);
+      min-height: 44px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .nav-btn:hover {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+    .nav-btn.is-active {
+      color: var(--on-surface);
+      font-weight: 600;
+      border-bottom: var(--indicator);
+    }
+
+    /* Hero / Overview Strip */
+    .portal-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: end;
+      border-bottom: var(--rule);
+      padding-bottom: var(--space-lg);
+    }
+    .intro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+    .carbon-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      height: 24px;
+      padding: 0 var(--space-sm);
+      border-radius: var(--rounded-full);
+      font-size: var(--label-size);
+      font-weight: 500;
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .carbon-tag.tag-positive {
+      background: var(--positive-container);
+      color: var(--positive);
+    }
+    .carbon-tag.tag-warning {
+      background: var(--warning-container);
+      color: var(--on-surface);
+    }
+    .carbon-tag.tag-error {
+      background: var(--error-container);
+      color: var(--error);
+    }
+    .carbon-tag.tag-neutral {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+
+    /* KPI Summary Strip */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .kpi-tile {
+      background: var(--surface-container);
+      padding: var(--space-md);
+      border-bottom: 2px solid var(--outline-variant);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .kpi-tile.is-primary {
+      border-bottom: var(--indicator);
+    }
+    .kpi-value {
+      font-family: var(--font-label);
+      font-weight: 300;
+      font-size: 1.5rem;
+      line-height: 1.2;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+      word-break: break-word;
+    }
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Workspace Sections */
+    .workspace-section {
+      display: none;
+      animation: panelFade var(--dur-short) var(--ease-out);
+    }
+    .workspace-section.is-visible {
+      display: block;
+    }
+    @keyframes panelFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: var(--space-md);
+      border-bottom: var(--rule);
+      padding-bottom: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Carbon Layers */
+    .layer {
+      background: var(--surface-container);
+      padding: var(--space-lg);
+    }
+    .layer-nested {
+      background: var(--surface-container-high);
+      padding: var(--space-md);
+    }
+    .layer-white {
+      background: var(--background);
+      border: 1px solid var(--outline-variant);
+      padding: var(--space-lg);
+    }
+
+    /* Buttons (Carbon) */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg) var(--space-sm) var(--space-md);
+      border: 1px solid transparent;
+      border-radius: 0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-compact {
+      min-height: 40px;
+      padding: var(--space-xs) var(--space-md);
+      gap: var(--space-sm);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+    .btn-primary:disabled {
+      background: var(--surface-container-high);
+      color: var(--on-surface-variant);
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--primary);
+      padding: var(--space-xs) var(--space-sm);
+      min-height: 40px;
+    }
+    .btn-ghost:hover {
+      background: var(--surface-container-high);
+    }
+    .btn-danger-ghost {
+      background: transparent;
+      color: var(--error);
+      border-color: var(--error);
+    }
+    .btn-danger-ghost:hover {
+      background: var(--error-container);
+    }
+
+    /* Form Controls */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg) var(--space-md);
+    }
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-lg) var(--space-md);
+    }
+    .col-span-full {
+      grid-column: 1 / -1;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .field-input, .field-select {
+      width: 100%;
+      height: 44px;
+      background: var(--background);
+      color: var(--on-surface);
+      border: 0;
+      border-bottom: var(--field-rule);
+      border-radius: var(--rounded);
+      padding: 0 var(--space-md);
+      font-size: var(--body-size);
+      transition: background-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .layer .field-input, .layer .field-select {
+      background: var(--background);
+    }
+    .field-select {
+      padding-right: var(--space-xl);
+      cursor: pointer;
+    }
+    .field-input:focus, .field-select:focus {
+      outline: 2px solid var(--focus);
+      outline-offset: -2px;
+    }
+    .field-input.is-error, .field-select.is-error {
+      border-bottom: 2px solid var(--error);
+      background: var(--error-container);
+    }
+    .field-error-msg {
+      font-size: 0.75rem;
+      color: var(--error);
+      font-weight: 500;
+      min-height: 1rem;
+    }
+
+    /* Stepper Rail */
+    .stepper-rail {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: var(--rule);
+      margin-bottom: var(--space-lg);
+      background: var(--surface-container);
+    }
+    .step-tab {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      padding: var(--space-md);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-height: 64px;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .step-tab:hover {
+      background: var(--surface-container-high);
+    }
+    .step-tab.is-active {
+      background: var(--background);
+      border-bottom: var(--indicator);
+    }
+    .step-tab.is-complete .step-num {
+      color: var(--tertiary);
+    }
+    .step-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--on-surface-variant);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .step-title {
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--on-surface);
+    }
+
+    /* Radio / Choice Cards */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .choice-card {
+      background: var(--background);
+      border: 1px solid var(--outline-variant);
+      padding: var(--space-md);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+      position: relative;
+    }
+    .choice-card:hover:not(:disabled) {
+      background: var(--surface-container-low);
+      border-color: var(--outline);
+    }
+    .choice-card.is-selected {
+      border-color: var(--primary);
+      box-shadow: inset 0 -3px 0 0 var(--primary);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .choice-card:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      background: var(--surface-container-low);
+    }
+
+    /* Notification Strip */
+    .notice-strip {
+      background: var(--surface-container);
+      border-left: 3px solid var(--primary);
+      padding: var(--space-md);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .notice-strip.is-positive {
+      background: var(--positive-container);
+      border-left-color: var(--positive);
+    }
+    .notice-strip.is-warning {
+      background: var(--warning-container);
+      border-left-color: var(--warning);
+    }
+    .notice-strip.is-error {
+      background: var(--error-container);
+      border-left-color: var(--error);
+    }
+    .notice-icon {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Document Upload Simulation Rows */
+    .upload-list {
+      display: grid;
+      gap: var(--space-md);
+    }
+    .upload-row {
+      background: var(--background);
+      border: 1px solid var(--outline-variant);
+      padding: var(--space-md);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .upload-row.is-uploaded {
+      border-left: 3px solid var(--positive);
+    }
+    .upload-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1 1 260px;
+    }
+    .upload-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .file-input-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* Fee Calculator & Payment Split Layout */
+    .split-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .aside-sticky {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .toggle-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: var(--background);
+      border: 1px solid var(--outline-variant);
+      cursor: pointer;
+    }
+    .toggle-row:hover {
+      background: var(--surface-container-low);
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Tables (Carbon) */
+    .data-table-wrap {
+      overflow-x: auto;
+      width: 100%;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .data-table thead th {
+      background: var(--surface-container-high);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface);
+      padding: var(--space-sm) var(--space-md);
+      text-align: left;
+      border-bottom: 1px solid var(--outline);
+    }
+    .data-table thead th.num, .data-table tbody td.num {
+      text-align: right;
+      font-family: var(--font-label);
+      font-variant-numeric: tabular-nums;
+    }
+    .data-table tbody tr {
+      border-bottom: var(--rule);
+    }
+    .data-table tbody tr:nth-child(even) {
+      background: var(--surface-container-low);
+    }
+    .data-table tbody td {
+      padding: var(--space-sm) var(--space-md);
+      vertical-align: top;
+    }
+    .data-table tfoot td {
+      padding: var(--space-md);
+      font-weight: 600;
+      border-top: 2px solid var(--on-surface);
+      background: var(--surface-container);
+    }
+    .data-table tfoot td.num {
+      text-align: right;
+      font-family: var(--font-label);
+      font-size: 1.125rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Payment Gateway Tabs */
+    .pay-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: var(--rule);
+      margin-bottom: var(--space-md);
+      background: var(--surface-container-low);
+    }
+    .pay-tab {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      padding: var(--space-sm) var(--space-md);
+      min-height: 44px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+    }
+    .pay-tab.is-active {
+      background: var(--background);
+      color: var(--on-surface);
+      font-weight: 600;
+      border-bottom: var(--indicator);
+    }
+
+    /* Digital Receipt Card */
+    .receipt-sheet {
+      background: var(--background);
+      border: 2px solid var(--on-surface);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .receipt-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-md);
+      border-bottom: 2px solid var(--on-surface);
+      padding-bottom: var(--space-md);
+    }
+    .receipt-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+      background: var(--surface-container);
+      padding: var(--space-md);
+    }
+    .receipt-qr-box {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      border-top: var(--rule);
+      padding-top: var(--space-md);
+    }
+
+    /* Application Tracker Timeline */
+    .search-bar-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-sm);
+      align-items: end;
+    }
+    .timeline-track {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+    .timeline-node {
+      background: var(--background);
+      border: 1px solid var(--outline-variant);
+      border-top: 3px solid var(--outline-variant);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .timeline-node.is-done {
+      border-top-color: var(--positive);
+    }
+    .timeline-node.is-current {
+      border-top-color: var(--primary);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    /* Action Row */
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-top: var(--space-lg);
+      border-top: var(--rule);
+      margin-top: var(--space-lg);
+    }
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    /* Info Grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .checklist-ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .checklist-ul li {
+      padding: var(--space-sm) 0;
+      border-bottom: var(--rule);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      font-size: 0.9375rem;
+    }
+    .checklist-ul li:last-child {
+      border-bottom: 0;
+    }
+
+    /* Footer */
+    .portal-footer {
+      border-top: var(--rule);
+      padding: var(--space-lg);
+      max-width: 1240px;
+      margin: var(--space-xl) auto 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Print rules for Digital Receipt */
+    @media print {
+      .no-print { display: none !important; }
+      body { background: var(--background); }
+      .receipt-sheet { border: 2px solid var(--on-surface); }
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .portal-intro { grid-template-columns: 1fr; }
+      .kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .split-layout { grid-template-columns: 1fr; }
+      .timeline-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stepper-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .page-grid { padding: var(--space-md); gap: var(--space-md); }
+      .portal-header-inner { padding: var(--space-md); }
+      .kpi-strip { grid-template-columns: 1fr; }
+      .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
+      .timeline-track { grid-template-columns: 1fr; }
+      .stepper-rail { grid-template-columns: 1fr; }
+      .pay-tabs { grid-template-columns: 1fr; }
+      .search-bar-row { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header & Navigation -->
+  <header class="portal-header no-print">
+    <div class="portal-header-inner">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">EE</div>
+        <div>
+          <div class="brand-name">EduEnroll Technical Admission Portal</div>
+          <div class="brand-sub">Engineering &amp; Polytechnic Admissions · 2026–27 Cycle</div>
+        </div>
+      </div>
+
+      <nav class="portal-nav" aria-label="Portal sections">
+        <button type="button" class="nav-btn is-active" id="nav-admission" onclick="switchSection('admission')">
+          <i data-lucide="file-text" width="16" height="16"></i>
+          <span>Admission Form</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-lateral" onclick="openLateralEntry()">
+          <i data-lucide="git-branch" width="16" height="16"></i>
+          <span>Lateral Entry</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-payment" onclick="switchSection('payment')">
+          <i data-lucide="credit-card" width="16" height="16"></i>
+          <span>Fee Payment</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-tracker" onclick="switchSection('tracker')">
+          <i data-lucide="search" width="16" height="16"></i>
+          <span>Application Status</span>
+        </button>
+        <button type="button" class="nav-btn" id="nav-info" onclick="switchSection('info')">
+          <i data-lucide="life-buoy" width="16" height="16"></i>
+          <span>Guidelines &amp; Helpline</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-grid">
+
+    <!-- Portal Summary & Live KPI Bar -->
+    <section class="no-print" aria-label="Portal overview">
+      <div class="portal-intro">
+        <div>
+          <div class="intro-meta">
+            <span class="carbon-tag">Session 2026–27</span>
+            <span class="carbon-tag tag-neutral">AICTE / State Board Norms</span>
+            <span class="carbon-tag tag-positive" id="global-save-badge">Progress Saved</span>
+          </div>
+          <h1 class="headline-split">Polytechnic &amp; Engineering <strong>Admission &amp; Fee Desk</strong></h1>
+          <p class="helper-text">Complete your 4-step diploma or lateral entry application, verify academic eligibility in real time, calculate applicable tuition or government-seat fees, and generate an instant verified digital receipt.</p>
+        </div>
+        <div class="action-group" style="justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary btn-compact" onclick="prefillDemoApplicant()">
+            <i data-lucide="sparkles" width="16" height="16"></i>
+            <span>Load Sample Profile</span>
+          </button>
+          <button type="button" class="btn btn-danger-ghost btn-compact" id="btn-reset-portal" onclick="handleResetPortal(this)">
+            <i data-lucide="rotate-ccw" width="16" height="16"></i>
+            <span>Reset Form</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="kpi-strip" style="margin-top: var(--space-lg);">
+        <div class="kpi-tile is-primary">
+          <span class="label-mono">Active Application ID</span>
+          <div class="kpi-value" id="kpi-app-id">DRAFT</div>
+          <span class="kpi-sub" id="kpi-app-status">Step 1 of 4 in progress</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="label-mono">Programme Track</span>
+          <div class="kpi-value" id="kpi-track">3-Year Diploma</div>
+          <span class="kpi-sub" id="kpi-branch">Branch not selected</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="label-mono">Eligibility Status</span>
+          <div class="kpi-value" id="kpi-eligibility">Pending Marks</div>
+          <span class="kpi-sub" id="kpi-eligibility-sub">Enter Class 10 / 12 / ITI scores</span>
+        </div>
+        <div class="kpi-tile">
+          <span class="label-mono">Computed Payable Fee</span>
+          <div class="kpi-value" id="kpi-fee">₹ 800</div>
+          <span class="kpi-sub" id="kpi-fee-sub">Application Fee · General</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- SECTION 1: MULTI-STEP ADMISSION FORM                             -->
+    <!-- ================================================================ -->
+    <section id="sec-admission" class="workspace-section is-visible" aria-labelledby="heading-admission">
+      <div class="section-header">
+        <div>
+          <span class="label-mono">Section 01 · Online Registration</span>
+          <h2 class="section-title" id="heading-admission">Multi-Step <strong>Admission Application</strong></h2>
+        </div>
+        <div class="action-group">
+          <span class="carbon-tag tag-neutral" id="step-progress-tag">Step 1 of 4</span>
+        </div>
+      </div>
+
+      <!-- Stepper Rail -->
+      <div class="stepper-rail" role="tablist" aria-label="Admission form steps">
+        <button type="button" class="step-tab is-active" id="step-tab-1" onclick="goToStep(1)">
+          <span class="step-num"><span id="step-icon-1">01</span> · Personal</span>
+          <span class="step-title">Personal &amp; Guardian</span>
+        </button>
+        <button type="button" class="step-tab" id="step-tab-2" onclick="goToStep(2)">
+          <span class="step-num"><span id="step-icon-2">02</span> · Programme</span>
+          <span class="step-title">Course &amp; Branch</span>
+        </button>
+        <button type="button" class="step-tab" id="step-tab-3" onclick="goToStep(3)">
+          <span class="step-num"><span id="step-icon-3">03</span> · Academics</span>
+          <span class="step-title">Qualifications &amp; Check</span>
+        </button>
+        <button type="button" class="step-tab" id="step-tab-4" onclick="goToStep(4)">
+          <span class="step-num"><span id="step-icon-4">04</span> · Enclosures</span>
+          <span class="step-title">Document Upload</span>
+        </button>
+      </div>
+
+      <!-- Validation Banner -->
+      <div id="form-feedback-banner" class="notice-strip is-error" style="display: none;" role="alert">
+        <i data-lucide="alert-circle" width="20" height="20" class="notice-icon"></i>
+        <div>
+          <strong id="form-feedback-title">Please review highlighted fields</strong>
+          <p class="helper-text" id="form-feedback-msg" style="color: var(--on-surface);"></p>
+        </div>
+      </div>
+
+      <!-- STEP 1: Personal & Guardian Details -->
+      <div id="step-panel-1" class="layer">
+        <div style="margin-bottom: var(--space-md);">
+          <h3 class="subhead">Step 1: Applicant &amp; Guardian Details</h3>
+          <p class="helper-text">Provide details strictly matching your Class X / Matriculation certificate. Category and Domicile directly govern fee concessions and reservation rules.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="inp-fullname">Candidate Full Name <span>*</span></label>
+            <input type="text" id="inp-fullname" class="field-input" placeholder="e.g. Aarav Kumar Verma" oninput="updateField('fullName', this.value)">
+            <span class="field-error-msg" id="err-fullName"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-dob">Date of Birth <span>*</span></label>
+            <input type="date" id="inp-dob" class="field-input" oninput="updateField('dob', this.value)">
+            <span class="field-error-msg" id="err-dob"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-gender">Gender <span>*</span></label>
+            <select id="inp-gender" class="field-select" onchange="updateField('gender', this.value)">
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Non-Binary / Other">Non-Binary / Other</option>
+            </select>
+            <span class="field-error-msg" id="err-gender"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-category">Admission Category <span>*</span></label>
+            <select id="inp-category" class="field-select" onchange="updateField('category', this.value)">
+              <option value="General">General (Unreserved)</option>
+              <option value="OBC">OBC (Non-Creamy Layer)</option>
+              <option value="SC">SC (Scheduled Caste)</option>
+              <option value="ST">ST (Scheduled Tribe)</option>
+              <option value="PT">PT (Primitive Tribe)</option>
+            </select>
+            <span class="field-error-msg" id="err-category"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-domicile">State of Domicile <span>*</span></label>
+            <select id="inp-domicile" class="field-select" onchange="updateField('domicile', this.value)">
+              <option value="">Select domicile state</option>
+              <option value="Jharkhand">Jharkhand</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Delhi NCR">Delhi NCR</option>
+              <option value="West Bengal">West Bengal</option>
+              <option value="Other State">Other Indian State</option>
+            </select>
+            <span class="field-error-msg" id="err-domicile"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-aadhar">Aadhaar Number (12 Digits) <span>*</span></label>
+            <input type="text" id="inp-aadhar" class="field-input mono-num" maxlength="14" placeholder="1234 5678 9012" oninput="handleAadharInput(this)">
+            <span class="field-error-msg" id="err-aadhar"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-email">Email Address <span>*</span></label>
+            <input type="email" id="inp-email" class="field-input" placeholder="candidate@example.com" oninput="updateField('email', this.value)">
+            <span class="field-error-msg" id="err-email"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-mobile">Mobile Number (10 Digits) <span>*</span></label>
+            <input type="tel" id="inp-mobile" class="field-input mono-num" maxlength="10" placeholder="9876543210" oninput="handleMobileInput('mobile', this)">
+            <span class="field-error-msg" id="err-mobile"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-guardian">Father / Guardian Name <span>*</span></label>
+            <input type="text" id="inp-guardian" class="field-input" placeholder="e.g. Rajeshwar Verma" oninput="updateField('guardianName', this.value)">
+            <span class="field-error-msg" id="err-guardianName"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-guardian-mobile">Guardian Mobile Number <span>*</span></label>
+            <input type="tel" id="inp-guardian-mobile" class="field-input mono-num" maxlength="10" placeholder="9876501234" oninput="handleMobileInput('guardianMobile', this)">
+            <span class="field-error-msg" id="err-guardianMobile"></span>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <span class="helper-text">Step 1 of 4 · Age calculated automatically as of 30 June 2026</span>
+          <div class="action-group">
+            <button type="button" class="btn btn-primary" onclick="nextStep(1)">
+              <span>Continue to Programme Selection</span>
+              <i data-lucide="arrow-right" width="16" height="16"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Course & Branch Selection -->
+      <div id="step-panel-2" class="layer" style="display: none;">
+        <div style="margin-bottom: var(--space-md);">
+          <h3 class="subhead">Step 2: Programme Track &amp; Engineering Branch</h3>
+          <p class="helper-text">Choose between standard 3-Year Diploma (after Class X) or 2-Year Lateral Entry into Semester 3 (after Class XII Science/Vocational PCM or 2-Year ITI).</p>
+        </div>
+
+        <div class="field-group" style="margin-bottom: var(--space-lg);">
+          <span class="field-label">Select Admission Track *</span>
+          <div class="choice-grid">
+            <button type="button" class="choice-card is-selected" id="track-diploma" onclick="selectTrack('3-Year Diploma')">
+              <span class="label-mono">After Class X · 6 Semesters</span>
+              <strong style="font-size: 1rem;">3-Year Diploma in Engineering</strong>
+              <span class="helper-text">Regular entry into Year 1. Direct merit or state entrance (JEECUP / DET / BCECE) eligible.</span>
+            </button>
+            <button type="button" class="choice-card" id="track-lateral" onclick="selectTrack('2-Year Lateral Entry')">
+              <span class="label-mono">After Class XII / ITI · 4 Semesters</span>
+              <strong style="font-size: 1rem;">2-Year Lateral Entry (2nd Year)</strong>
+              <span class="helper-text">Direct admission into Year 2 (10% sanctioned intake + vacant seats). Saves 1 full academic year.</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Lateral Entry Pathway Sub-choice -->
+        <div id="lateral-pathway-box" class="layer-nested" style="display: none; margin-bottom: var(--space-lg);">
+          <div class="form-grid">
+            <div class="field-group">
+              <label class="field-label" for="inp-qual-stream">Lateral Entry Qualifying Pathway *</label>
+              <select id="inp-qual-stream" class="field-select" onchange="updateLateralStream(this.value)">
+                <option value="Class XII Science (PCM)">Class XII / Intermediate Science or Vocational (PCM)</option>
+                <option value="ITI Circuital">2-Year ITI — Circuital Trade (Computer / Electronics / Electrical)</option>
+                <option value="ITI Mechanical">2-Year ITI — Mechanical / Equivalent Trade</option>
+              </select>
+              <span class="helper-text">ITI candidates may only opt for branches compatible with their ITI trade.</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="inp-written-score">Written Test &amp; Interview Score (Optional Estimate / 100)</label>
+              <input type="number" id="inp-written-score" class="field-input mono-num" min="0" max="100" placeholder="e.g. 78" oninput="updateField('writtenScore', this.value)">
+              <span class="helper-text">Used to simulate 50% weightage merit index (University Polytechnic norm).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <span class="field-label">Select Engineering Branch *</span>
+          <div class="choice-grid" id="branch-grid">
+            <!-- Populated by JS -->
+          </div>
+          <span class="field-error-msg" id="err-branch"></span>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="btn btn-secondary" onclick="goToStep(1)">
+            <i data-lucide="arrow-left" width="16" height="16"></i>
+            <span>Back to Personal</span>
+          </button>
+          <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+            <span>Continue to Academic Check</span>
+            <i data-lucide="arrow-right" width="16" height="16"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Academic Qualifications & Real-Time Eligibility Check -->
+      <div id="step-panel-3" class="layer" style="display: none;">
+        <div style="margin-bottom: var(--space-md);">
+          <h3 class="subhead">Step 3: Academic Qualifications &amp; Real-Time Eligibility Check</h3>
+          <p class="helper-text">Eligibility is verified live against AICTE, State Polytechnic, and University Polytechnic admission norms.</p>
+        </div>
+
+        <div class="form-grid-3" style="margin-bottom: var(--space-lg);">
+          <div class="field-group">
+            <label class="field-label" for="inp-board10">Class X Board Name *</label>
+            <input type="text" id="inp-board10" class="field-input" placeholder="e.g. CBSE / JAC / UP Board" oninput="updateField('board10', this.value)">
+            <span class="field-error-msg" id="err-board10"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-pct10">Class X Aggregate (%) *</label>
+            <input type="number" id="inp-pct10" class="field-input mono-num" min="0" max="100" step="0.1" placeholder="e.g. 74.5" oninput="updateAcademicScore('pct10', this.value)">
+            <span class="field-error-msg" id="err-pct10"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-year10">Class X Passing Year *</label>
+            <select id="inp-year10" class="field-select" onchange="updateAcademicScore('year10', this.value)">
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023 or earlier</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-math">Class X Mathematics (%) *</label>
+            <input type="number" id="inp-math" class="field-input mono-num" min="0" max="100" step="0.1" placeholder="e.g. 78" oninput="updateAcademicScore('mathMarks', this.value)">
+            <span class="field-error-msg" id="err-mathMarks"></span>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="inp-science">Class X Science (%) *</label>
+            <input type="number" id="inp-science" class="field-input mono-num" min="0" max="100" step="0.1" placeholder="e.g. 72" oninput="updateAcademicScore('scienceMarks', this.value)">
+            <span class="field-error-msg" id="err-scienceMarks"></span>
+          </div>
+
+          <div class="field-group" id="group-pct12">
+            <label class="field-label" for="inp-pct12"><span id="lbl-pct12">Class XII / ITI Marks (%)</span></label>
+            <input type="number" id="inp-pct12" class="field-input mono-num" min="0" max="100" step="0.1" placeholder="Required for Lateral Entry" oninput="updateAcademicScore('pct12', this.value)">
+            <span class="field-error-msg" id="err-pct12"></span>
+          </div>
+        </div>
+
+        <!-- Live Eligibility Evaluation Panel -->
+        <div id="eligibility-verdict-box" class="notice-strip" aria-live="polite">
+          <i data-lucide="shield-check" width="22" height="22" class="notice-icon"></i>
+          <div style="width: 100%;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-sm);">
+              <strong id="elig-headline">Enter marks above to run live eligibility verification</strong>
+              <span class="carbon-tag tag-neutral" id="elig-badge">Awaiting Input</span>
+            </div>
+            <ul id="elig-checklist" class="checklist-ul" style="margin-top: var(--space-sm);"></ul>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="btn btn-secondary" onclick="goToStep(2)">
+            <i data-lucide="arrow-left" width="16" height="16"></i>
+            <span>Back to Programme</span>
+          </button>
+          <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+            <span>Continue to Document Upload</span>
+            <i data-lucide="arrow-right" width="16" height="16"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Document Upload Simulation & Final Submission -->
+      <div id="step-panel-4" class="layer" style="display: none;">
+        <div style="margin-bottom: var(--space-md);">
+          <h3 class="subhead">Step 4: Document Upload Simulation &amp; Application Submission</h3>
+          <p class="helper-text">Attach scanned PDF/JPG files or use "Simulate Verified Scan" to test document verification. Originals must be presented during physical counselling.</p>
+        </div>
+
+        <div class="upload-list" id="upload-list-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <div class="layer-nested" style="margin-top: var(--space-lg);">
+          <label class="toggle-row" style="background: var(--background);">
+            <div>
+              <strong>Applicant Declaration &amp; English Proficiency Confirmation</strong>
+              <p class="helper-text">I confirm that all academic and personal details submitted are accurate, that I possess adequate written and spoken English proficiency for technical instruction, and that I understand fee once remitted is non-refundable.</p>
+            </div>
+            <input type="checkbox" id="chk-declaration" onchange="updateField('declarationAccepted', this.checked)">
+          </label>
+          <span class="field-error-msg" id="err-declaration"></span>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="btn btn-secondary" onclick="goToStep(3)">
+            <i data-lucide="arrow-left" width="16" height="16"></i>
+            <span>Back to Academics</span>
+          </button>
+          <div class="action-group">
+            <button type="button" class="btn btn-secondary" onclick="simulateAllDocuments()">
+              <i data-lucide="file-check-2" width="16" height="16"></i>
+              <span>Simulate All Mandatory Scans</span>
+            </button>
+            <button type="button" class="btn btn-primary" onclick="submitApplication()">
+              <span>Submit Application &amp; Proceed to Fee</span>
+              <i data-lucide="check-circle-2" width="16" height="16"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- SECTION 2: DYNAMIC FEE CALCULATOR, PAYMENT GATEWAY & RECEIPT     -->
+    <!-- ================================================================ -->
+    <section id="sec-payment" class="workspace-section" aria-labelledby="heading-payment">
+      <div class="section-header">
+        <div>
+          <span class="label-mono">Section 02 · Fee Desk &amp; Digital Receipt</span>
+          <h2 class="section-title" id="heading-payment">Dynamic Fee Calculator &amp; <strong>Online Payment Gateway</strong></h2>
+        </div>
+        <div class="action-group">
+          <span class="carbon-tag" id="payment-status-tag">Pending Payment</span>
+        </div>
+      </div>
+
+      <div class="split-layout">
+        <!-- Left Column: Fee Configurator -->
+        <div class="layer">
+          <h3 class="subhead" style="margin-bottom: var(--space-md);">1. Configure Fee Schedule &amp; Concessions</h3>
+
+          <div class="form-grid" style="margin-bottom: var(--space-lg);">
+            <div class="field-group">
+              <label class="field-label" for="fee-payment-type">Payment Purpose</label>
+              <select id="fee-payment-type" class="field-select" onchange="updateFeeConfig('paymentType', this.value)">
+                <option value="application">Application Registration Fee Only</option>
+                <option value="tuition">Annual / First-Year Admission &amp; Tuition Fee</option>
+              </select>
+              <span class="helper-text">Pay ₹800/₹500 now to sit entrance/counselling, or full annual seat fee.</span>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="fee-seat-model">Institutional Seat Category</label>
+              <select id="fee-seat-model" class="field-select" onchange="updateFeeConfig('seatModel', this.value)">
+                <option value="autonomous">Autonomous / Private Institute (KIT Norm: ₹75k / ₹70k)</option>
+                <option value="government">Government Polytechnic Seat (UP / State Norm: ₹11,306 / ₹11,274)</option>
+              </select>
+              <span class="helper-text">Applies automatically when Payment Purpose is Annual Admission Fee.</span>
+            </div>
+          </div>
+
+          <div id="fee-addons-wrap" style="display: grid; gap: var(--space-sm); margin-bottom: var(--space-lg);">
+            <span class="label-mono">Optional Campus &amp; Hostel Add-ons</span>
+
+            <label class="toggle-row">
+              <div>
+                <strong>Residential Hostel Accommodation</strong>
+                <p class="helper-text" id="hostel-addon-desc">Autonomous campus shared hostel &amp; mess (₹42,000/yr) or Govt Polytechnic Hostel (₹2,300/yr).</p>
+              </div>
+              <input type="checkbox" id="chk-hostel" onchange="updateFeeConfig('addHostel', this.checked)">
+            </label>
+
+            <label class="toggle-row">
+              <div>
+                <strong>Refundable Caution &amp; Library Deposit</strong>
+                <p class="helper-text" id="caution-addon-desc">One-time security deposit (₹2,000 Autonomous / ₹200 Govt Caution Money).</p>
+              </div>
+              <input type="checkbox" id="chk-caution" onchange="updateFeeConfig('addCaution', this.checked)">
+            </label>
+          </div>
+
+          <div id="fee-schemes-wrap" style="display: grid; gap: var(--space-sm);">
+            <span class="label-mono">Scholarship &amp; Credit Card Scheme Toggles</span>
+
+            <label class="toggle-row">
+              <div>
+                <strong>Bihar Student Credit Card (BSCC) Scheme</strong>
+                <p class="helper-text">Defers 80% of tuition &amp; hostel charges under State BSCC financing (eligible Bihar domicile candidates).</p>
+              </div>
+              <input type="checkbox" id="chk-bscc" onchange="updateFeeConfig('schemeBscc', this.checked)">
+            </label>
+
+            <label class="toggle-row">
+              <div>
+                <strong>State Income-Based Tuition Fee Refund (Income &lt; ₹2,00,000 p.a.)</strong>
+                <p class="helper-text">Applies eligible State scholarship fee waiver on Govt/aided tuition component (₹8,000 waiver / 25% institutional relief).</p>
+              </div>
+              <input type="checkbox" id="chk-income-waiver" onchange="updateFeeConfig('schemeIncome', this.checked)">
+            </label>
+
+            <label class="toggle-row">
+              <div>
+                <strong>Saksham Baalika, Sampann Pariwar Merit Grant (Female Engineering Top-3)</strong>
+                <p class="helper-text">₹10,000 annual merit scholarship offset for eligible female engineering diploma candidates.</p>
+              </div>
+              <input type="checkbox" id="chk-saksham" onchange="updateFeeConfig('schemeSaksham', this.checked)">
+            </label>
+          </div>
+        </div>
+
+        <!-- Right Column: Itemised Breakdown + Payment Gateway -->
+        <div class="aside-sticky">
+          <div class="layer-white">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm);">
+              <span class="label-mono">2. Itemised Fee Breakdown</span>
+              <span class="mono-num" style="font-size: 0.75rem; color: var(--on-surface-variant);" id="fee-applicant-ref">DRAFT</span>
+            </div>
+
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Fee Head</th>
+                    <th class="num">Amount (INR)</th>
+                  </tr>
+                </thead>
+                <tbody id="fee-breakdown-body">
+                  <!-- Populated by JS -->
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Net Payable Now</td>
+                    <td class="num" id="fee-net-total">₹ 800</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <p class="helper-text" id="fee-rule-note" style="margin-top: var(--space-sm);"></p>
+          </div>
+
+          <!-- Simulated Payment Gateway -->
+          <div class="layer" id="payment-gateway-panel">
+            <h3 class="subhead" style="margin-bottom: var(--space-sm);">3. Simulated Payment Gateway</h3>
+            <p class="helper-text" style="margin-bottom: var(--space-md);">Select a payment instrument to execute an instant simulated transaction and generate your verified receipt.</p>
+
+            <div class="pay-tabs" role="tablist">
+              <button type="button" class="pay-tab is-active" id="paytab-upi" onclick="selectPayMethod('upi')">
+                <i data-lucide="qr-code" width="15" height="15"></i>
+                <span>UPI / QR</span>
+              </button>
+              <button type="button" class="pay-tab" id="paytab-card" onclick="selectPayMethod('card')">
+                <i data-lucide="credit-card" width="15" height="15"></i>
+                <span>Card</span>
+              </button>
+              <button type="button" class="pay-tab" id="paytab-netbanking" onclick="selectPayMethod('netbanking')">
+                <i data-lucide="landmark" width="15" height="15"></i>
+                <span>Netbanking</span>
+              </button>
+            </div>
+
+            <!-- UPI Panel -->
+            <div id="pay-panel-upi">
+              <div style="display: flex; gap: var(--space-md); align-items: center; background: var(--background); padding: var(--space-md); border: 1px solid var(--outline-variant); margin-bottom: var(--space-md);">
+                <div id="upi-qr-svg-wrap" style="flex-shrink: 0;"></div>
+                <div>
+                  <div class="label-mono">Instant BharatQR / UPI</div>
+                  <div style="font-weight: 600; font-size: 0.9375rem; margin: 2px 0;">eduenroll.admissions@sbi</div>
+                  <p class="helper-text">Scan QR or enter your UPI VPA below to approve simulated mandate.</p>
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="inp-upi-id">Enter UPI VPA ID</label>
+                <input type="text" id="inp-upi-id" class="field-input" value="applicant@okicici" placeholder="username@bank">
+              </div>
+            </div>
+
+            <!-- Card Panel -->
+            <div id="pay-panel-card" style="display: none;">
+              <div class="form-grid">
+                <div class="field-group col-span-full">
+                  <label class="field-label" for="inp-card-num">Card Number (Simulated)</label>
+                  <input type="text" id="inp-card-num" class="field-input mono-num" maxlength="19" value="4532 8910 2234 9012" oninput="formatCardInput(this)">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="inp-card-exp">Expiry (MM/YY)</label>
+                  <input type="text" id="inp-card-exp" class="field-input mono-num" maxlength="5" value="08/29">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="inp-card-cvv">CVV</label>
+                  <input type="password" id="inp-card-cvv" class="field-input mono-num" maxlength="3" value="412">
+                </div>
+              </div>
+            </div>
+
+            <!-- Netbanking Panel -->
+            <div id="pay-panel-netbanking" style="display: none;">
+              <div class="field-group">
+                <label class="field-label" for="inp-bank-select">Select Scheduled Bank</label>
+                <select id="inp-bank-select" class="field-select">
+                  <option value="State Bank of India">State Bank of India (SBI)</option>
+                  <option value="HDFC Bank">HDFC Bank Retail</option>
+                  <option value="ICICI Bank">ICICI Bank NetBanking</option>
+                  <option value="Punjab National Bank">Punjab National Bank</option>
+                  <option value="Bank of Baroda">Bank of Baroda</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="payment-inline-msg" class="notice-strip" style="display: none; margin-top: var(--space-md);">
+              <i data-lucide="loader" width="18" height="18" class="notice-icon"></i>
+              <span id="payment-inline-text">Processing transaction…</span>
+            </div>
+
+            <div style="margin-top: var(--space-md);">
+              <button type="button" class="btn btn-primary" style="width: 100%;" id="btn-pay-now" onclick="processSimulatedPayment()">
+                <span id="btn-pay-label">Authorise &amp; Pay ₹ 800</span>
+                <i data-lucide="lock" width="16" height="16"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital Receipt Generator Output -->
+      <div id="receipt-container" style="display: none; margin-top: var(--space-xl);">
+        <div class="section-header no-print">
+          <div>
+            <span class="label-mono">Verified Transaction Output</span>
+            <h3 class="section-title">Instant Digital <strong>Admission Fee Receipt</strong></h3>
+          </div>
+          <div class="action-group">
+            <button type="button" class="btn btn-secondary btn-compact" onclick="downloadReceiptText()">
+              <i data-lucide="download" width="16" height="16"></i>
+              <span>Download Receipt (.txt)</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-compact" onclick="window.print()">
+              <i data-lucide="printer" width="16" height="16"></i>
+              <span>Print Official Copy</span>
+            </button>
+          </div>
+        </div>
+
+        <article class="receipt-sheet" id="receipt-printable" aria-label="Digital Admission Fee Receipt">
+          <div class="receipt-head">
+            <div>
+              <div class="label-mono">EduEnroll Technical Admission Portal · Verified E-Receipt</div>
+              <h3 class="subhead" style="margin-top: var(--space-xs);">Provisional Admission &amp; Fee Remittance Voucher</h3>
+              <div class="helper-text">Academic Session 2026–27 · AICTE / State Technical Board Affiliated</div>
+            </div>
+            <div style="text-align: right;">
+              <span class="carbon-tag tag-positive" id="rcpt-status-badge">PAID &amp; VERIFIED</span>
+              <div class="mono-num" style="font-size: 0.875rem; margin-top: var(--space-xs);" id="rcpt-txn-ref">TXN-2026-000000</div>
+            </div>
+          </div>
+
+          <div class="receipt-meta-grid">
+            <div>
+              <div class="label-mono">Application ID</div>
+              <div class="mono-num" style="font-weight: 600;" id="rcpt-app-id">—</div>
+            </div>
+            <div>
+              <div class="label-mono">Candidate Name</div>
+              <div style="font-weight: 600;" id="rcpt-name">—</div>
+            </div>
+            <div>
+              <div class="label-mono">Programme &amp; Branch</div>
+              <div style="font-weight: 600;" id="rcpt-branch">—</div>
+            </div>
+            <div>
+              <div class="label-mono">Category / Domicile</div>
+              <div id="rcpt-category">—</div>
+            </div>
+            <div>
+              <div class="label-mono">Payment Mode</div>
+              <div id="rcpt-mode">—</div>
+            </div>
+            <div>
+              <div class="label-mono">Date &amp; Timestamp</div>
+              <div class="mono-num" id="rcpt-date">—</div>
+            </div>
+          </div>
+
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Fee Component / Head</th>
+                  <th class="num">Amount (INR)</th>
+                </tr>
+              </thead>
+              <tbody id="rcpt-items-body"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Total Amount Remitted (Non-Refundable as per Brochure Norms)</td>
+                  <td class="num" id="rcpt-total-paid">₹ 0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="receipt-qr-box">
+            <div id="rcpt-qr-svg" style="flex-shrink: 0;"></div>
+            <div>
+              <div class="label-mono">Cryptographic Verification Badge</div>
+              <div class="mono-num" style="font-size: 0.8125rem; font-weight: 600;" id="rcpt-hash">SHA256-SIM-VERIFIED</div>
+              <p class="helper-text">Present a printed copy of this voucher alongside original academic certificates and signed Anti-Ragging Affidavits during physical reporting.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- SECTION 3: LIVE APPLICATION TRACKER                              -->
+    <!-- ================================================================ -->
+    <section id="sec-tracker" class="workspace-section" aria-labelledby="heading-tracker">
+      <div class="section-header">
+        <div>
+          <span class="label-mono">Section 03 · Real-Time Status Desk</span>
+          <h2 class="section-title" id="heading-tracker">Live <strong>Application Tracker</strong></h2>
+        </div>
+        <span class="carbon-tag tag-neutral" id="tracker-count-tag">4 Sample Records + Your Submissions</span>
+      </div>
+
+      <div class="layer">
+        <div class="search-bar-row">
+          <div class="field-group">
+            <label class="field-label" for="inp-tracker-query">Search by Application Number or 10-Digit Mobile Number</label>
+            <input type="text" id="inp-tracker-query" class="field-input mono-num" placeholder="e.g. EDU-2026-10482 or 9835120411" onkeydown="if(event.key==='Enter'){searchApplication();}">
+          </div>
+          <button type="button" class="btn btn-primary btn-compact" style="height: 44px;" onclick="searchApplication()">
+            <i data-lucide="search" width="16" height="16"></i>
+            <span>Check Status</span>
+          </button>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs); margin-top: var(--space-md);">
+          <span class="label-mono" style="margin-right: var(--space-xs);">Sample Records:</span>
+          <div id="tracker-sample-chips" style="display: flex; flex-wrap: wrap; gap: var(--space-xs);"></div>
+        </div>
+      </div>
+
+      <!-- Tracker Result Panel -->
+      <div id="tracker-result-panel" class="layer-white" style="margin-top: var(--space-lg);">
+        <!-- Populated dynamically -->
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- SECTION 4: GUIDELINES, LATERAL ENTRY RULES & HELPLINE            -->
+    <!-- ================================================================ -->
+    <section id="sec-info" class="workspace-section" aria-labelledby="heading-info">
+      <div class="section-header">
+        <div>
+          <span class="label-mono">Section 04 · Prospectus &amp; Regulatory Guidelines</span>
+          <h2 class="section-title" id="heading-info">Eligibility, Lateral Entry, <strong>Anti-Ragging &amp; Helpline</strong></h2>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <!-- Eligibility & Lateral Entry Rules -->
+        <div class="layer">
+          <span class="label-mono">Admission Norms</span>
+          <h3 class="subhead" style="margin: var(--space-xs) 0 var(--space-md) 0;">Eligibility &amp; Lateral Entry Rules</h3>
+          <ul class="checklist-ul">
+            <li>
+              <i data-lucide="check" width="16" height="16" style="color: var(--positive); flex-shrink: 0; margin-top: 3px;"></i>
+              <div><strong>3-Year Diploma (Regular):</strong> Passed Class X (Matriculation) with at least 35% aggregate; Mathematics and Science compulsory. Minimum age 15 years (no upper age cap for general autonomous seats).</div>
+            </li>
+            <li>
+              <i data-lucide="check" width="16" height="16" style="color: var(--positive); flex-shrink: 0; margin-top: 3px;"></i>
+              <div><strong>2-Year Lateral Entry (2nd Year):</strong> Passed Class XII / Intermediate Science or Vocational (Physics, Chemistry &amp; Mathematics) OR 2-Year ITI after Class X (in current year or preceding 2 years).</div>
+            </li>
+            <li>
+              <i data-lucide="check" width="16" height="16" style="color: var(--positive); flex-shrink: 0; margin-top: 3px;"></i>
+              <div><strong>Residential / Jharkhand Lateral Entry Age Cap:</strong> As of 30 June of admission year: ≤ 20 years (General &amp; OBC) and ≤ 25 years (ST, SC &amp; PT). Candidate must hold Jharkhand domicile for state-venture residential seats.</div>
+            </li>
+            <li>
+              <i data-lucide="check" width="16" height="16" style="color: var(--positive); flex-shrink: 0; margin-top: 3px;"></i>
+              <div><strong>Merit Weightage (Lateral Entry):</strong> 50% Written Test &amp; Personal Interview + 20% Class X Board Marks + 30% Class XII / ITI Marks.</div>
+            </li>
+          </ul>
+
+          <div class="data-table-wrap" style="margin-top: var(--space-md);">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ITI Trade Background</th>
+                  <th>Permitted Diploma Branches</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Circuital (Computer / Electronics / Electrical)</td>
+                  <td>Computer Science, ECE, Electrical &amp; Electronics</td>
+                </tr>
+                <tr>
+                  <td>Mechanical or Equivalent Trade</td>
+                  <td>Mechanical, Automobile, Civil Engineering</td>
+                </tr>
+                <tr>
+                  <td>Class XII Science / Vocational (PCM)</td>
+                  <td>All 6 Engineering Branches Permitted</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Required Documents & Anti-Ragging -->
+        <div class="layer">
+          <span class="label-mono">Physical Verification</span>
+          <h3 class="subhead" style="margin: var(--space-xs) 0 var(--space-md) 0;">Mandatory Documents &amp; Anti-Ragging Procedure</h3>
+          <ul class="checklist-ul">
+            <li>
+              <i data-lucide="file-check" width="16" height="16" style="color: var(--primary); flex-shrink: 0; margin-top: 3px;"></i>
+              <div>Original &amp; attested photocopies of Class X Marksheet, Class XII / ITI Marksheet (Lateral Entry), Residential/Domicile Certificate, and Caste Certificate (OBC/SC/ST/PT).</div>
+            </li>
+            <li>
+              <i data-lucide="file-check" width="16" height="16" style="color: var(--primary); flex-shrink: 0; margin-top: 3px;"></i>
+              <div>Transfer Certificate, Character Certificate, Medical Fitness Certificate (examined by Institute Medical Officer), Aadhaar ID, Passport Photos, and printed Application Form.</div>
+            </li>
+            <li>
+              <i data-lucide="shield-alert" width="16" height="16" style="color: var(--error); flex-shrink: 0; margin-top: 3px;"></i>
+              <div><strong>Mandatory 75% Attendance &amp; Conduct:</strong> 75% minimum attendance in lectures, tutorials, and practicals per subject is compulsory. Zero tolerance for tobacco, alcohol, or ragging.</div>
+            </li>
+          </ul>
+
+          <div class="notice-strip" style="background: var(--background); margin-top: var(--space-md); margin-bottom: 0;">
+            <i data-lucide="info" width="18" height="18" class="notice-icon" style="color: var(--primary);"></i>
+            <div>
+              <strong>3-Step UGC Anti-Ragging Affidavit Procedure</strong>
+              <p class="helper-text" style="color: var(--on-surface);">
+                <strong>Step 1:</strong> Visit <code>www.ANTIRAGGING.in</code> or <code>www.AMANMOVEMENT.org</code> and select Online Affidavits.<br>
+                <strong>Step 2:</strong> Complete the electronic form with student and parent/guardian contact details.<br>
+                <strong>Step 3:</strong> Print both emailed PDFs (Student Affidavit &amp; Parent Affidavit), sign both, and submit at admission.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Important Dates & Counselling Schedule -->
+        <div class="layer">
+          <span class="label-mono">Admission Calendar</span>
+          <h3 class="subhead" style="margin: var(--space-xs) 0 var(--space-md) 0;">2026–27 Cycle &amp; Special Round Schedule</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Round / Milestone</th>
+                  <th>Window / Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>First Round Online Application</td>
+                  <td class="mono-num">16 Apr – 30 May 2026</td>
+                </tr>
+                <tr>
+                  <td>Special Rounds 1 – 4 Counselling</td>
+                  <td class="mono-num">01 Jun – 12 Jul 2026</td>
+                </tr>
+                <tr>
+                  <td>Special Rounds 5 – 8 Counselling</td>
+                  <td class="mono-num">13 Jul – 14 Aug 2026</td>
+                </tr>
+                <tr>
+                  <td>Upcoming 2027 Cycle (Tentative)</td>
+                  <td class="mono-num">Mar – Aug 2027</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Helpline & Contact Directory -->
+        <div class="layer">
+          <span class="label-mono">Student Support Desk</span>
+          <h3 class="subhead" style="margin: var(--space-xs) 0 var(--space-md) 0;">Helpline &amp; Emergency Contacts</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Desk / Authority</th>
+                  <th>Contact Channel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Admission Helpline Desk</td>
+                  <td class="mono-num">+91-9456890266</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="portal-footer no-print">
+    <div>
+      <strong>EduEnroll Technical Admission Portal</strong> · Session 2026–27 · Built in British English with grounded Polytechnic &amp; Lateral Entry norms.
+    </div>
+    <div class="mono-num">
+      State &amp; AICTE Fee Norms · UGC Anti-Ragging Compliant
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+
+  <script>
+    // =========================================================================
+    // DATA & REFERENCE TABLES (Using backtick literals for safety)
+    // =========================================================================
+    const BRANCHES = [
+      { id: `CSE`, name: `Computer Science & Engineering`, seats: 60, group: `circuital`, focus: `C/C++, Python, Java, Web Tech & DBMS` },
+      { id: `ECE`, name: `Electronics & Communication Engineering`, seats: 60, group: `circuital`, focus: `Microcontrollers, Signal Systems & VLSI` },
+      { id: `EEE`, name: `Electrical & Electronics Engineering`, seats: 60, group: `circuital`, focus: `Circuit Theory, Power Electronics & Automation` },
+      { id: `ME`, name: `Mechanical Engineering`, seats: 60, group: `mechanical`, focus: `Thermodynamics, CAD/CAM & Manufacturing` },
+      { id: `CE`, name: `Civil Engineering`, seats: 60, group: `mechanical`, focus: `Surveying, AutoCAD & Structural Analysis` },
+      { id: `AE`, name: `Automobile Engineering`, seats: 60, group: `mechanical`, focus: `Powertrain Systems, Chassis & EV Diagnostics` }
+    ];
+
+    const MANDATORY_DOCS = [
+      { id: `doc10`, title: `Class X (Matriculation) Marksheet`, reqFor: `All`, hint: `PDF or JPG · Mandatory for date of birth and 10th percentage check` },
+      { id: `doc12`, title: `Class XII / ITI Marksheet`, reqFor: `Lateral`, hint: `Mandatory for 2-Year Lateral Entry applicants` },
+      { id: `docPhoto`, title: `Recent Passport-Size Colour Photograph`, reqFor: `All`, hint: `3.5 × 4.5 cm clear frontal portrait` },
+      { id: `docSign`, title: `Scanned Candidate Signature`, reqFor: `All`, hint: `Black or blue ink on plain white paper` },
+      { id: `docDomicile`, title: `Domicile / Residential & Category Certificate`, reqFor: `All`, hint: `Required for Jharkhand state seats and OBC/SC/ST/PT fee concessions` }
+    ];
+
+    const SAMPLE_APPLICATIONS = [
+      {
+        appId: `EDU-2026-10482`,
+        fullName: `Rohan Kumar Mahato`,
+        mobile: `9835120411`,
+        category: `OBC`,
+        domicile: `Jharkhand`,
+        track: `2-Year Lateral Entry`,
+        branch: `Computer Science & Engineering`,
+        statusStage: 4, // 1: Submitted, 2: Verified, 3: Seat Allotted, 4: Fee Received
+        seatModel: `Autonomous Institute`,
+        submittedDate: `14 May 2026`,
+        remarks: `Merit Rank #18 (Written+PI: 84%, 10th: 81%, ITI: 88%). Seat confirmed in CSE Semester 3.`,
+        paidAmount: 70000,
+        txnRef: `TXN-2026-884102`,
+        isSample: true
+      },
+      {
+        appId: `EDU-2026-10891`,
+        fullName: `Ananya Sharma`,
+        mobile: `9415802344`,
+        category: `General`,
+        domicile: `Uttar Pradesh`,
+        track: `3-Year Diploma`,
+        branch: `Civil Engineering`,
+        statusStage: 3,
+        seatModel: `Government Polytechnic`,
+        submittedDate: `22 May 2026`,
+        remarks: `Documents verified. Government Polytechnic Seat Allotted in Round 2 Counselling. Remit ₹11,306 to lock seat.`,
+        paidAmount: 800,
+        txnRef: `TXN-2026-612093`,
+        isSample: true
+      },
+      {
+        appId: `EDU-2026-11204`,
+        fullName: `Md. Sahil Ansari`,
+        mobile: `9122456780`,
+        category: `OBC`,
+        domicile: `Bihar`,
+        track: `3-Year Diploma`,
+        branch: `Mechanical Engineering`,
+        statusStage: 2,
+        seatModel: `Autonomous Institute`,
+        submittedDate: `28 May 2026`,
+        remarks: `Class X marksheet and BSCC domicile declaration verified. Scheduled for Special Round 1 counselling.`,
+        paidAmount: 500,
+        txnRef: `TXN-2026-773219`,
+        isSample: true
+      },
+      {
+        appId: `EDU-2026-11530`,
+        fullName: `Priya Kumari Oraon`,
+        mobile: `8789304512`,
+        category: `ST`,
+        domicile: `Jharkhand`,
+        track: `2-Year Lateral Entry`,
+        branch: `Electronics & Communication Engineering`,
+        statusStage: 1,
+        seatModel: `Autonomous Institute`,
+        submittedDate: `30 May 2026`,
+        remarks: `Application submitted online. Awaiting document verification desk review.`,
+        paidAmount: 500,
+        txnRef: `TXN-2026-990145`,
+        isSample: true
+      }
+    ];
+
+    // =========================================================================
+    // APPLICATION STATE
+    // =========================================================================
+    const DEFAULT_STATE = {
+      activeSection: `admission`,
+      currentStep: 1,
+      appId: `DRAFT`,
+      submitted: false,
+      applicant: {
+        fullName: ``,
+        dob: ``,
+        gender: ``,
+        category: `General`,
+        domicile: `Jharkhand`,
+        aadhar: ``,
+        email: ``,
+        mobile: ``,
+        guardianName: ``,
+        guardianMobile: ``,
+        track: `3-Year Diploma`,
+        qualStream: `Class XII Science (PCM)`,
+        writtenScore: ``,
+        branchId: ``,
+        board10: ``,
+        pct10: ``,
+        year10: `2026`,
+        mathMarks: ``,
+        scienceMarks: ``,
+        pct12: ``,
+        declarationAccepted: false
+      },
+      documents: {},
+      feeConfig: {
+        paymentType: `application`,
+        seatModel: `autonomous`,
+        addHostel: false,
+        addCaution: false,
+        schemeBscc: false,
+        schemeIncome: false,
+        schemeSaksham: false,
+        payMethod: `upi`
+      },
+      receipt: null,
+      userApplications: [],
+      lastTrackerQuery: `EDU-2026-10482`
+    };
+
+    let appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    let persistTimeout = null;
+    let isProcessingPayment = false;
+
+    // =========================================================================
+    // INITIALISATION & PERSISTENCE
+    // =========================================================================
+    async function initPortal() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            appState = mergeDeep(JSON.parse(JSON.stringify(DEFAULT_STATE)), saved);
+          }
+        }
+      } catch (e) {
+        // Fallback cleanly to default state
+      }
+
+      renderAll();
+
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    function mergeDeep(target, source) {
+      for (const key of Object.keys(source)) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          if (!target[key] || typeof target[key] !== 'object') target[key] = {};
+          mergeDeep(target[key], source[key]);
+        } else {
+          target[key] = source[key];
+        }
+      }
+      return target;
+    }
+
+    function saveState() {
+      const badge = document.getElementById('global-save-badge');
+      if (badge) badge.textContent = `Saving…`;
+      clearTimeout(persistTimeout);
+      persistTimeout = setTimeout(async function() {
+        try {
+          if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+            await window.notebookAppApi.setAppState(appState);
+          }
+          if (badge) badge.textContent = `Progress Saved`;
+        } catch (err) {
+          if (badge) badge.textContent = `Session Active`;
+        }
+      }, 150);
+    }
+
+    // =========================================================================
+    // NAVIGATION & SECTION SWITCHING
+    // =========================================================================
+    function switchSection(sectionId) {
+      appState.activeSection = sectionId;
+      const sections = [`admission`, `payment`, `tracker`, `info`];
+      sections.forEach(function(sec) {
+        const el = document.getElementById(`sec-` + sec);
+        if (el) {
+          if (sec === sectionId) el.classList.add('is-visible');
+          else el.classList.remove('is-visible');
+        }
+      });
+
+      const navIds = [`admission`, `lateral`, `payment`, `tracker`, `info`];
+      navIds.forEach(function(id) {
+        const btn = document.getElementById(`nav-` + id);
+        if (btn) btn.classList.remove('is-active');
+      });
+
+      const activeBtnId = (sectionId === `admission` && appState.applicant.track === `2-Year Lateral Entry`)
+        ? `nav-lateral`
+        : `nav-` + sectionId;
+      const activeBtn = document.getElementById(activeBtnId);
+      if (activeBtn) activeBtn.classList.add('is-active');
+
+      if (sectionId === `payment`) {
+        renderFeeSection();
+      } else if (sectionId === `tracker`) {
+        renderTrackerChips();
+        searchApplication(appState.lastTrackerQuery);
+      }
+
+      if (window.lucide) window.lucide.createIcons();
+      saveState();
+    }
+
+    function openLateralEntry() {
+      appState.applicant.track = `2-Year Lateral Entry`;
+      switchSection(`admission`);
+      goToStep(2);
+      renderBranchCards();
+      evaluateEligibility();
+      renderFeeSection();
+      updateKpiStrip();
+      saveState();
+    }
+
+    // =========================================================================
+    // STEPPER & FORM INPUT HANDLERS
+    // =========================================================================
+    function goToStep(stepNum) {
+      appState.currentStep = stepNum;
+      for (let i = 1; i <= 4; i++) {
+        const panel = document.getElementById(`step-panel-` + i);
+        const tab = document.getElementById(`step-tab-` + i);
+        if (panel) panel.style.display = (i === stepNum) ? `block` : `none`;
+        if (tab) {
+          tab.classList.toggle(`is-active`, i === stepNum);
+          tab.classList.toggle(`is-complete`, i < stepNum);
+        }
+      }
+      const tag = document.getElementById(`step-progress-tag`);
+      if (tag) tag.textContent = `Step ` + stepNum + ` of 4`;
+      hideFormFeedback();
+      if (stepNum === 2) renderBranchCards();
+      if (stepNum === 3) {
+        syncAcademicStepLabels();
+        evaluateEligibility();
+      }
+      if (stepNum === 4) renderUploadRows();
+      updateKpiStrip();
+      saveState();
+    }
+
+    function nextStep(fromStep) {
+      const check = validateStep(fromStep);
+      if (!check.valid) {
+        showFormFeedback(`Step ` + fromStep + ` incomplete`, check.message);
+        return;
+      }
+      hideFormFeedback();
+      goToStep(fromStep + 1);
+    }
+
+    function updateField(key, value) {
+      appState.applicant[key] = value;
+      clearFieldError(key);
+      if (key === `dob` || key === `category` || key === `domicile` || key === `writtenScore`) {
+        evaluateEligibility();
+      }
+      if (key === `category` || key === `gender` || key === `domicile`) {
+        renderFeeSection();
+      }
+      updateKpiStrip();
+      saveState();
+    }
+
+    function handleAadharInput(input) {
+      const digits = input.value.replace(/\D/g, '').slice(0, 12);
+      const formatted = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+      input.value = formatted;
+      appState.applicant.aadhar = digits;
+      clearFieldError(`aadhar`);
+      saveState();
+    }
+
+    function handleMobileInput(fieldKey, input) {
+      const digits = input.value.replace(/\D/g, '').slice(0, 10);
+      input.value = digits;
+      appState.applicant[fieldKey] = digits;
+      clearFieldError(fieldKey);
+      saveState();
+    }
+
+    function selectTrack(trackName) {
+      appState.applicant.track = trackName;
+      const btnDip = document.getElementById(`track-diploma`);
+      const btnLat = document.getElementById(`track-lateral`);
+      if (btnDip) btnDip.classList.toggle(`is-selected`, trackName === `3-Year Diploma`);
+      if (btnLat) btnLat.classList.toggle(`is-selected`, trackName === `2-Year Lateral Entry`);
+
+      const latBox = document.getElementById(`lateral-pathway-box`);
+      if (latBox) latBox.style.display = (trackName === `2-Year Lateral Entry`) ? `block` : `none`;
+
+      renderBranchCards();
+      syncAcademicStepLabels();
+      evaluateEligibility();
+      renderFeeSection();
+      updateKpiStrip();
+      saveState();
+    }
+
+    function updateLateralStream(stream) {
+      appState.applicant.qualStream = stream;
+      // Clear branch if incompatible with chosen ITI trade
+      const selected = BRANCHES.find(function(b) { return b.id === appState.applicant.branchId; });
+      if (selected && !isBranchAllowedForStream(selected, stream)) {
+        appState.applicant.branchId = ``;
+      }
+      renderBranchCards();
+      evaluateEligibility();
+      updateKpiStrip();
+      saveState();
+    }
+
+    function isBranchAllowedForStream(branch, stream) {
+      if (appState.applicant.track !== `2-Year Lateral Entry`) return true;
+      if (stream === `ITI Circuital`) return branch.group === `circuital`;
+      if (stream === `ITI Mechanical`) return branch.group === `mechanical`;
+      return true;
+    }
+
+    function renderBranchCards() {
+      const container = document.getElementById(`branch-grid`);
+      if (!container) return;
+      const stream = appState.applicant.qualStream;
+      container.innerHTML = BRANCHES.map(function(b) {
+        const allowed = isBranchAllowedForStream(b, stream);
+        const isSelected = appState.applicant.branchId === b.id;
+        const disabledAttr = allowed ? `` : `disabled`;
+        const statusNote = allowed
+          ? `Intake: ` + b.seats + ` Seats · ` + b.focus
+          : `Restricted under ` + stream + ` trade rule`;
+        return `<button type="button" class="choice-card ` + (isSelected ? `is-selected` : ``) + `" ` + disabledAttr + ` onclick="selectBranch('` + b.id + `')">
+          <span class="label-mono">` + b.id + ` · ` + (b.group === `circuital` ? `Circuital` : `Core Engg`) + `</span>
+          <strong style="font-size: 0.9375rem;">` + b.name + `</strong>
+          <span class="helper-text">` + statusNote + `</span>
+        </button>`;
+      }).join('');
+    }
+
+    function selectBranch(branchId) {
+      appState.applicant.branchId = branchId;
+      clearFieldError(`branch`);
+      renderBranchCards();
+      updateKpiStrip();
+      saveState();
+    }
+
+    function syncAcademicStepLabels() {
+      const isLat = appState.applicant.track === `2-Year Lateral Entry`;
+      const lbl12 = document.getElementById(`lbl-pct12`);
+      const inp12 = document.getElementById(`inp-pct12`);
+      if (lbl12) {
+        lbl12.textContent = isLat ? `Class XII / ITI Aggregate (%) *` : `Class XII / ITI Marks (%) (Optional)`;
+      }
+      if (inp12) {
+        inp12.placeholder = isLat ? `Mandatory (e.g. 68.5)` : `Optional for 3-Year Diploma`;
+      }
+    }
+
+    function updateAcademicScore(key, value) {
+      appState.applicant[key] = value;
+      clearFieldError(key);
+      evaluateEligibility();
+      updateKpiStrip();
+      saveState();
+    }
+
+    // =========================================================================
+    // REAL-TIME ELIGIBILITY ENGINE
+    // =========================================================================
+    function computeAgeAsOfJune2026(dobStr) {
+      if (!dobStr) return null;
+      const birth = new Date(dobStr + `T00:00:00`);
+      if (isNaN(birth.getTime())) return null;
+      const ref = new Date(`2026-06-30T00:00:00`);
+      let age = ref.getFullYear() - birth.getFullYear();
+      const m = ref.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && ref.getDate() < birth.getDate())) {
+        age--;
+      }
+      return age;
+    }
+
+    function evaluateEligibility() {
+      const a = appState.applicant;
+      const isLat = a.track === `2-Year Lateral Entry`;
+      const pct10 = parseFloat(a.pct10);
+      const math = parseFloat(a.mathMarks);
+      const sci = parseFloat(a.scienceMarks);
+      const pct12 = parseFloat(a.pct12);
+      const age = computeAgeAsOfJune2026(a.dob);
+
+      const checks = [];
+      let hasFail = false;
+      let hasPending = false;
+
+      // 1. Class X Aggregate
+      if (isNaN(pct10)) {
+        hasPending = true;
+        checks.push({ ok: null, text: `Class X aggregate percentage not entered yet (min. 35% required).` });
+      } else if (pct10 >= 35 && pct10 <= 100) {
+        checks.push({ ok: true, text: `Class X aggregate (` + pct10.toFixed(1) + `%) meets the 35% minimum threshold.` });
+      } else {
+        hasFail = true;
+        checks.push({ ok: false, text: `Class X aggregate (` + pct10 + `%) must be between 35% and 100%.` });
+      }
+
+      // 2. Mathematics & Science
+      if (isNaN(math) || isNaN(sci)) {
+        hasPending = true;
+        checks.push({ ok: null, text: `Enter Class X Mathematics & Science marks (both subjects compulsory, min. 33%).` });
+      } else if (math >= 33 && sci >= 33 && math <= 100 && sci <= 100) {
+        checks.push({ ok: true, text: `Compulsory subjects cleared: Maths ` + math + `%, Science ` + sci + `%.` });
+      } else {
+        hasFail = true;
+        checks.push({ ok: false, text: `Mathematics and Science marks must each be at least 33% (valid range 0–100).` });
+      }
+
+      // 3. Lateral Entry Specifics
+      if (isLat) {
+        if (isNaN(pct12)) {
+          hasPending = true;
+          checks.push({ ok: null, text: `Enter Class XII (Science/Vocational PCM) or 2-Year ITI percentage for Lateral Entry.` });
+        } else if (pct12 >= 35 && pct12 <= 100) {
+          checks.push({ ok: true, text: `Qualifying ` + a.qualStream + ` (` + pct12.toFixed(1) + `%) satisfies Lateral Entry rule.` });
+        } else {
+          hasFail = true;
+          checks.push({ ok: false, text: `Class XII / ITI score must be at least 35% to qualify for Lateral Entry.` });
+        }
+
+        // Merit index simulation (50% Written/PI + 20% X + 30% XII/ITI)
+        const written = parseFloat(a.writtenScore);
+        if (!isNaN(pct10) && !isNaN(pct12)) {
+          const wScore = isNaN(written) ? 70 : Math.min(100, Math.max(0, written));
+          const meritIndex = (wScore * 0.5) + (pct10 * 0.2) + (pct12 * 0.3);
+          checks.push({
+            ok: true,
+            text: `Composite Lateral Entry Merit Index: ` + meritIndex.toFixed(2) + `/100 (50% Written/PI` + (isNaN(written) ? ` [70 est.]` : ``) + ` + 20% Class X + 30% Class XII/ITI).`
+          });
+        }
+      }
+
+      // 4. Age Check
+      if (age === null) {
+        hasPending = true;
+        checks.push({ ok: null, text: `Enter Date of Birth in Step 1 to verify age criteria as of 30 June 2026.` });
+      } else if (age < 15) {
+        hasFail = true;
+        checks.push({ ok: false, text: `Calculated age (` + age + ` yrs) is below the 15-year minimum for polytechnic enrolment.` });
+      } else if (isLat && a.domicile === `Jharkhand`) {
+        const cap = (a.category === `ST` || a.category === `SC` || a.category === `PT`) ? 25 : 20;
+        if (age <= cap) {
+          checks.push({ ok: true, text: `Age (` + age + ` yrs) satisfies Jharkhand Lateral Entry cap (≤ ` + cap + ` yrs for ` + a.category + `).` });
+        } else {
+          checks.push({ ok: null, text: `Age (` + age + ` yrs) exceeds Jharkhand govt-venture Lateral Entry cap (` + cap + ` yrs), though autonomous/private seats have no upper age limit.` });
+        }
+      } else {
+        checks.push({ ok: true, text: `Age (` + age + ` yrs) satisfies minimum 15-year requirement (no upper limit for direct seats).` });
+      }
+
+      const box = document.getElementById(`eligibility-verdict-box`);
+      const headline = document.getElementById(`elig-headline`);
+      const badge = document.getElementById(`elig-badge`);
+      const list = document.getElementById(`elig-checklist`);
+
+      let verdict = `Pending`;
+      if (hasFail) verdict = `Not Eligible`;
+      else if (!hasPending) verdict = `Eligible`;
+
+      if (box && headline && badge && list) {
+        box.classList.remove(`is-positive`, `is-warning`, `is-error`);
+        badge.classList.remove(`tag-positive`, `tag-warning`, `tag-error`, `tag-neutral`);
+
+        if (verdict === `Eligible`) {
+          box.classList.add(`is-positive`);
+          badge.classList.add(`tag-positive`);
+          badge.textContent = `ELIGIBLE`;
+          headline.textContent = `Candidate meets all academic criteria for ` + a.track;
+        } else if (verdict === `Not Eligible`) {
+          box.classList.add(`is-error`);
+          badge.classList.add(`tag-error`);
+          badge.textContent = `REVIEW REQUIRED`;
+          headline.textContent = `Eligibility threshold not met — inspect flagged criteria below`;
+        } else {
+          box.classList.add(`is-warning`);
+          badge.classList.add(`tag-warning`);
+          badge.textContent = `INCOMPLETE`;
+          headline.textContent = `Complete all mandatory marks to finalise eligibility`;
+        }
+
+        list.innerHTML = checks.map(function(c) {
+          const iconName = c.ok === true ? `check-circle-2` : (c.ok === false ? `x-circle` : `clock`);
+          const colorVar = c.ok === true ? `var(--positive)` : (c.ok === false ? `var(--error)` : `var(--on-surface-variant)`);
+          return `<li><i data-lucide="` + iconName + `" width="16" height="16" style="color: ` + colorVar + `; flex-shrink: 0; margin-top: 3px;"></i><span>` + c.text + `</span></li>`;
+        }).join('');
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      return { verdict: verdict, checks: checks };
+    }
+
+    // =========================================================================
+    // DOCUMENT UPLOAD SIMULATION (Metadata Only — No Binary Storage)
+    // =========================================================================
+    function renderUploadRows() {
+      const container = document.getElementById(`upload-list-container`);
+      if (!container) return;
+      const isLat = appState.applicant.track === `2-Year Lateral Entry`;
+
+      container.innerHTML = MANDATORY_DOCS.map(function(doc) {
+        const isRequired = (doc.reqFor === `All`) || (doc.reqFor === `Lateral` && isLat);
+        const uploaded = appState.documents[doc.id];
+        const statusTag = uploaded
+          ? `<span class="carbon-tag tag-positive">Verified Scan · ` + uploaded.sizeLabel + `</span>`
+          : `<span class="carbon-tag ` + (isRequired ? `tag-warning` : `tag-neutral`) + `">` + (isRequired ? `Required` : `Optional`) + `</span>`;
+
+        return `<div class="upload-row ` + (uploaded ? `is-uploaded` : ``) + `">
+          <div class="upload-meta">
+            <div style="display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap;">
+              <strong>` + doc.title + `</strong>
+              ` + statusTag + `
+            </div>
+            <span class="helper-text">` + (uploaded ? `Attached: ` + uploaded.fileName + ` (` + uploaded.uploadedAt + `)` : doc.hint) + `</span>
+          </div>
+          <div class="upload-actions">
+            <input type="file" id="file-` + doc.id + `" class="file-input-hidden" accept=".pdf,.jpg,.jpeg,.png" onchange="handleRealFilePick('` + doc.id + `', this)">
+            <button type="button" class="btn btn-secondary btn-compact" onclick="triggerFilePicker('` + doc.id + `')">
+              <i data-lucide="upload" width="15" height="15"></i>
+              <span>Choose File</span>
+            </button>
+            <button type="button" class="btn btn-ghost btn-compact" onclick="simulateSingleDoc('` + doc.id + `')">
+              <i data-lucide="check-square" width="15" height="15"></i>
+              <span>Simulate Scan</span>
+            </button>
+          </div>
+        </div>`;
+      }).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function triggerFilePicker(docId) {
+      const input = document.getElementById(`file-` + docId);
+      if (input) input.click();
+    }
+
+    function handleRealFilePick(docId, input) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const kb = Math.max(12, Math.round(file.size / 1024));
+      appState.documents[docId] = {
+        fileName: file.name,
+        sizeLabel: kb + ` KB`,
+        uploadedAt: `Verified ` + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+      };
+      renderUploadRows();
+      saveState();
+    }
+
+    function simulateSingleDoc(docId) {
+      const map = {
+        doc10: `Class_X_Marksheet_2026.pdf`,
+        doc12: `Class_XII_ITI_Transcript.pdf`,
+        docPhoto: `Candidate_Passport_Photo.jpg`,
+        docSign: `Candidate_Signature_Scan.png`,
+        docDomicile: `Domicile_Category_Cert.pdf`
+      };
+      appState.documents[docId] = {
+        fileName: map[docId] || `Verified_Document.pdf`,
+        sizeLabel: `184 KB`,
+        uploadedAt: `Simulated Scan OK`
+      };
+      renderUploadRows();
+      saveState();
+    }
+
+    function simulateAllDocuments() {
+      MANDATORY_DOCS.forEach(function(d) {
+        simulateSingleDoc(d.id);
+      });
+      hideFormFeedback();
+    }
+
+    // =========================================================================
+    // VALIDATION & APPLICATION SUBMISSION
+    // =========================================================================
+    function setFieldError(key, msg) {
+      const errEl = document.getElementById(`err-` + key);
+      if (errEl) errEl.textContent = msg;
+      const idMap = {
+        fullName: `inp-fullname`, dob: `inp-dob`, gender: `inp-gender`,
+        category: `inp-category`, domicile: `inp-domicile`, aadhar: `inp-aadhar`,
+        email: `inp-email`, mobile: `inp-mobile`, guardianName: `inp-guardian`,
+        guardianMobile: `inp-guardian-mobile`, board10: `inp-board10`,
+        pct10: `inp-pct10`, mathMarks: `inp-math`, scienceMarks: `inp-science`,
+        pct12: `inp-pct12`
+      };
+      const inp = document.getElementById(idMap[key]);
+      if (inp) inp.classList.add(`is-error`);
+    }
+
+    function clearFieldError(key) {
+      const errEl = document.getElementById(`err-` + key);
+      if (errEl) errEl.textContent = ``;
+      const idMap = {
+        fullName: `inp-fullname`, dob: `inp-dob`, gender: `inp-gender`,
+        category: `inp-category`, domicile: `inp-domicile`, aadhar: `inp-aadhar`,
+        email: `inp-email`, mobile: `inp-mobile`, guardianName: `inp-guardian`,
+        guardianMobile: `inp-guardian-mobile`, board10: `inp-board10`,
+        pct10: `inp-pct10`, mathMarks: `inp-math`, scienceMarks: `inp-science`,
+        pct12: `inp-pct12`
+      };
+      const inp = document.getElementById(idMap[key]);
+      if (inp) inp.classList.remove(`is-error`);
+    }
+
+    function showFormFeedback(title, msg) {
+      const banner = document.getElementById(`form-feedback-banner`);
+      const t = document.getElementById(`form-feedback-title`);
+      const m = document.getElementById(`form-feedback-msg`);
+      if (banner && t && m) {
+        t.textContent = title;
+        m.textContent = msg;
+        banner.style.display = `flex`;
+      }
+    }
+
+    function hideFormFeedback() {
+      const banner = document.getElementById(`form-feedback-banner`);
+      if (banner) banner.style.display = `none`;
+    }
+
+    function validateStep(step) {
+      const a = appState.applicant;
+      if (step === 1) {
+        let ok = true;
+        if (!a.fullName.trim() || a.fullName.trim().length < 3) { setFieldError(`fullName`, `Enter candidate's full name.`); ok = false; }
+        if (!a.dob) { setFieldError(`dob`, `Select date of birth.`); ok = false; }
+        if (!a.gender) { setFieldError(`gender`, `Select gender.`); ok = false; }
+        if (!a.domicile) { setFieldError(`domicile`, `Select state of domicile.`); ok = false; }
+        if (!/^\d{12}$/.test(a.aadhar)) { setFieldError(`aadhar`, `Enter valid 12-digit Aadhaar number.`); ok = false; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email.trim())) { setFieldError(`email`, `Enter a valid email address.`); ok = false; }
+        if (!/^\d{10}$/.test(a.mobile)) { setFieldError(`mobile`, `Enter valid 10-digit mobile number.`); ok = false; }
+        if (!a.guardianName.trim()) { setFieldError(`guardianName`, `Enter father or guardian name.`); ok = false; }
+        if (!/^\d{10}$/.test(a.guardianMobile)) { setFieldError(`guardianMobile`, `Enter valid 10-digit guardian number.`); ok = false; }
+        return { valid: ok, message: `All mandatory personal and guardian fields must be completed accurately before proceeding.` };
+      }
+
+      if (step === 2) {
+        if (!a.branchId) {
+          setFieldError(`branch`, `Select an eligible engineering branch to continue.`);
+          return { valid: false, message: `Please select your preferred engineering branch.` };
+        }
+        return { valid: true, message: `` };
+      }
+
+      if (step === 3) {
+        let ok = true;
+        if (!a.board10.trim()) { setFieldError(`board10`, `Enter Class X board name.`); ok = false; }
+        const p10 = parseFloat(a.pct10);
+        const math = parseFloat(a.mathMarks);
+        const sci = parseFloat(a.scienceMarks);
+        if (isNaN(p10) || p10 < 35 || p10 > 100) { setFieldError(`pct10`, `Class X aggregate must be 35%–100%.`); ok = false; }
+        if (isNaN(math) || math < 33 || math > 100) { setFieldError(`mathMarks`, `Maths score must be 33%–100%.`); ok = false; }
+        if (isNaN(sci) || sci < 33 || sci > 100) { setFieldError(`scienceMarks`, `Science score must be 33%–100%.`); ok = false; }
+
+        if (a.track === `2-Year Lateral Entry`) {
+          const p12 = parseFloat(a.pct12);
+          if (isNaN(p12) || p12 < 35 || p12 > 100) { setFieldError(`pct12`, `Class XII / ITI score (35%–100%) is mandatory for Lateral Entry.`); ok = false; }
+        }
+        const ev = evaluateEligibility();
+        if (ev.verdict === `Not Eligible`) ok = false;
+        return { valid: ok, message: `Please meet all minimum academic eligibility criteria before moving to document upload.` };
+      }
+
+      if (step === 4) {
+        const isLat = a.track === `2-Year Lateral Entry`;
+        const missingDocs = MANDATORY_DOCS.filter(function(d) {
+          const req = (d.reqFor === `All`) || (d.reqFor === `Lateral` && isLat);
+          return req && !appState.documents[d.id];
+        });
+        if (missingDocs.length > 0) {
+          return { valid: false, message: `Attach or simulate scans for all mandatory documents (` + missingDocs.map(function(d) { return d.title; }).join(`, `) + `).` };
+        }
+        if (!a.declarationAccepted) {
+          setFieldError(`declaration`, `Confirm the applicant declaration above.`);
+          return { valid: false, message: `Please accept the applicant declaration checkbox before submitting.` };
+        }
+        return { valid: true, message: `` };
+      }
+      return { valid: true, message: `` };
+    }
+
+    function submitApplication() {
+      for (let s = 1; s <= 4; s++) {
+        const check = validateStep(s);
+        if (!check.valid) {
+          goToStep(s);
+          showFormFeedback(`Step ` + s + ` requires attention`, check.message);
+          return;
+        }
+      }
+
+      if (!appState.submitted || appState.appId === `DRAFT`) {
+        const randNum = Math.floor(20000 + Math.random() * 79999);
+        appState.appId = `EDU-2026-` + randNum;
+      }
+      appState.submitted = true;
+
+      const branchObj = BRANCHES.find(function(b) { return b.id === appState.applicant.branchId; });
+      const branchName = branchObj ? branchObj.name : `Computer Science & Engineering`;
+
+      // Add or update in userApplications so Live Tracker finds it immediately
+      const existingIdx = appState.userApplications.findIndex(function(item) {
+        return item.appId === appState.appId;
+      });
+      const record = {
+        appId: appState.appId,
+        fullName: appState.applicant.fullName.trim(),
+        mobile: appState.applicant.mobile,
+        category: appState.applicant.category,
+        domicile: appState.applicant.domicile,
+        track: appState.applicant.track,
+        branch: branchName,
+        statusStage: appState.receipt ? 4 : 2, // Submitted & Auto-Verified digitally
+        seatModel: appState.feeConfig.seatModel === `government` ? `Government Polytechnic` : `Autonomous Institute`,
+        submittedDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        remarks: `Submitted via EduEnroll Portal. Academic marks & scanned enclosures verified digitally. Ready for fee remittance.`,
+        paidAmount: appState.receipt ? appState.receipt.totalPaid : 0,
+        txnRef: appState.receipt ? appState.receipt.txnRef : `PENDING`,
+        isSample: false
+      };
+
+      if (existingIdx >= 0) {
+        appState.userApplications[existingIdx] = record;
+      } else {
+        appState.userApplications.unshift(record);
+      }
+      appState.lastTrackerQuery = appState.appId;
+
+      updateKpiStrip();
+      saveState();
+      switchSection(`payment`);
+    }
+
+    // =========================================================================
+    // DYNAMIC FEE CALCULATOR & PAYMENT GATEWAY
+    // =========================================================================
+    function updateFeeConfig(key, value) {
+      appState.feeConfig[key] = value;
+      renderFeeSection();
+      updateKpiStrip();
+      saveState();
+    }
+
+    function computeFeeBreakdown() {
+      const cfg = appState.feeConfig;
+      const a = appState.applicant;
+      const isGen = (a.category === `General`);
+      const isLat = (a.track === `2-Year Lateral Entry`);
+      const isGovt = (cfg.seatModel === `government`);
+
+      const items = [];
+      let ruleNote = ``;
+
+      if (cfg.paymentType === `application`) {
+        const appFee = isGen ? 800 : 500;
+        items.push({
+          label: `Online Application & Counselling Fee (` + a.category + ` Category)`,
+          amount: appFee
+        });
+        ruleNote = `University Polytechnic norm: ₹800 for General candidates, ₹500 for OBC/SC/ST/PT candidates. Non-refundable once remitted.`;
+      } else {
+        // Annual / Semester Tuition Fee
+        if (isGovt) {
+          if (isLat) {
+            items.push({ label: `Tuition & Institutional Fee (2nd Year Lateral Entry — Group K)`, amount: 11274 });
+          } else {
+            items.push({ label: `Tuition & Institutional Fee (1st Year New Admission — Group A)`, amount: 11306 });
+          }
+          if (cfg.addHostel) {
+            items.push({ label: `Govt Polytechnic Hostel, Electricity & Maintenance Fee`, amount: 2300 });
+          }
+          if (cfg.addCaution) {
+            items.push({ label: `Institute & Hostel Caution Money (Refundable)`, amount: 400 });
+          }
+          if (cfg.schemeIncome) {
+            items.push({ label: `State Fee Refund / Scholarship Waiver (Parental Income < ₹2 Lakh p.a.)`, amount: -8000 });
+          }
+          if (cfg.schemeSaksham && a.gender === `Female`) {
+            items.push({ label: `Saksham Baalika, Sampann Pariwar Merit Grant (Eligible Female Engg.)`, amount: -10000 });
+          }
+          if (cfg.schemeBscc) {
+            const subBase = items.reduce(function(s, x) { return s + x.amount; }, 0);
+            const bsccCredit = Math.max(0, Math.round(subBase * 0.8));
+            items.push({ label: `Bihar Student Credit Card (BSCC) Direct State Disbursement (80%)`, amount: -bsccCredit });
+          }
+          ruleNote = `Government Polytechnic Rampur / UP State fee schedule: Group A ₹11,306 (1st Yr) or Group K ₹11,274 (Lateral Entry), Hostel ₹2,300/yr.`;
+        } else {
+          // Autonomous / Private Institute (KIT Varanasi / AICTE norm)
+          const baseTuition = isLat ? 70000 : 75000;
+          items.push({
+            label: isLat ? `Polytechnic Lateral Entry Annual Fee (2-Year Programme)` : `Polytechnic Diploma Annual Fee (3-Year Programme)`,
+            amount: baseTuition
+          });
+          if (cfg.addHostel) {
+            items.push({ label: `Campus Residential Hostel & Mess Facility (Annual)`, amount: 42000 });
+          }
+          if (cfg.addCaution) {
+            items.push({ label: `One-Time Refundable Caution & Lab Deposit`, amount: 2000 });
+          }
+          if (cfg.schemeIncome) {
+            const waiver = Math.round(baseTuition * 0.25);
+            items.push({ label: `EWS / Low-Income Scholarship Concession (25% Tuition Relief)`, amount: -waiver });
+          }
+          if (cfg.schemeSaksham) {
+            items.push({ label: `Saksham Baalika / Merit Scholarship Grant`, amount: -10000 });
+          }
+          if (cfg.schemeBscc) {
+            const currentSum = items.reduce(function(s, x) { return s + x.amount; }, 0);
+            const bsccCredit = Math.max(0, Math.round(currentSum * 0.8));
+            items.push({ label: `Bihar Student Credit Card (BSCC) Deferred Financing (80%)`, amount: -bsccCredit });
+          }
+          ruleNote = `Autonomous AICTE-approved Polytechnic norm: ₹75,000/yr (3-Year Diploma) or ₹70,000/yr (2-Year Lateral Entry). BSCC support available.`;
+        }
+      }
+
+      const rawTotal = items.reduce(function(sum, row) { return sum + row.amount; }, 0);
+      const netTotal = Math.max(isGovt && cfg.paymentType === `tuition` ? 1000 : 0, rawTotal);
+
+      return { items: items, netTotal: netTotal, ruleNote: ruleNote };
+    }
+
+    function formatINR(num) {
+      const abs = Math.abs(Math.round(num));
+      const str = abs.toLocaleString('en-IN');
+      return (num < 0 ? `− ₹ ` : `₹ `) + str;
+    }
+
+    function renderFeeSection() {
+      const cfg = appState.feeConfig;
+      const elType = document.getElementById(`fee-payment-type`);
+      const elSeat = document.getElementById(`fee-seat-model`);
+      const elHostel = document.getElementById(`chk-hostel`);
+      const elCaution = document.getElementById(`chk-caution`);
+      const elBscc = document.getElementById(`chk-bscc`);
+      const elInc = document.getElementById(`chk-income-waiver`);
+      const elSak = document.getElementById(`chk-saksham`);
+
+      if (elType) elType.value = cfg.paymentType;
+      if (elSeat) elSeat.value = cfg.seatModel;
+      if (elHostel) elHostel.checked = cfg.addHostel;
+      if (elCaution) elCaution.checked = cfg.addCaution;
+      if (elBscc) elBscc.checked = cfg.schemeBscc;
+      if (elInc) elInc.checked = cfg.schemeIncome;
+      if (elSak) elSak.checked = cfg.schemeSaksham;
+
+      const isAppOnly = (cfg.paymentType === `application`);
+      const addonsWrap = document.getElementById(`fee-addons-wrap`);
+      const schemesWrap = document.getElementById(`fee-schemes-wrap`);
+      if (addonsWrap) addonsWrap.style.display = isAppOnly ? `none` : `grid`;
+      if (schemesWrap) schemesWrap.style.display = isAppOnly ? `none` : `grid`;
+      if (elSeat) elSeat.disabled = isAppOnly;
+
+      const calc = computeFeeBreakdown();
+      const tbody = document.getElementById(`fee-breakdown-body`);
+      const netEl = document.getElementById(`fee-net-total`);
+      const noteEl = document.getElementById(`fee-rule-note`);
+      const refEl = document.getElementById(`fee-applicant-ref`);
+      const payLabel = document.getElementById(`btn-pay-label`);
+
+      if (tbody) {
+        tbody.innerHTML = calc.items.map(function(row) {
+          const cls = row.amount < 0 ? `style="color: var(--positive);"` : ``;
+          return `<tr>
+            <td ` + cls + `>` + row.label + `</td>
+            <td class="num" ` + cls + `>` + formatINR(row.amount) + `</td>
+          </tr>`;
+        }).join('');
+      }
+      if (netEl) netEl.textContent = formatINR(calc.netTotal);
+      if (noteEl) noteEl.textContent = calc.ruleNote;
+      if (refEl) refEl.textContent = appState.appId + ` · ` + appState.applicant.category;
+      if (payLabel) payLabel.textContent = `Authorise & Pay ` + formatINR(calc.netTotal);
+
+      selectPayMethod(cfg.payMethod, true);
+      renderUpiQr(calc.netTotal);
+
+      const payStatusTag = document.getElementById(`payment-status-tag`);
+      if (payStatusTag) {
+        if (appState.receipt) {
+          payStatusTag.textContent = `Paid · ` + appState.receipt.txnRef;
+          payStatusTag.className = `carbon-tag tag-positive`;
+        } else {
+          payStatusTag.textContent = `Pending Payment`;
+          payStatusTag.className = `carbon-tag tag-warning`;
+        }
+      }
+
+      if (appState.receipt) {
+        renderReceipt(appState.receipt);
+      } else {
+        const rcptWrap = document.getElementById(`receipt-container`);
+        if (rcptWrap) rcptWrap.style.display = `none`;
+      }
+    }
+
+    function selectPayMethod(method, skipSave) {
+      appState.feeConfig.payMethod = method;
+      [`upi`, `card`, `netbanking`].forEach(function(m) {
+        const tab = document.getElementById(`paytab-` + m);
+        const panel = document.getElementById(`pay-panel-` + m);
+        if (tab) tab.classList.toggle(`is-active`, m === method);
+        if (panel) panel.style.display = (m === method) ? `block` : `none`;
+      });
+      if (!skipSave) saveState();
+    }
+
+    function formatCardInput(inp) {
+      const digits = inp.value.replace(/\D/g, '').slice(0, 16);
+      inp.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+    }
+
+    function buildDeterministicQrSvg(seedText, sizePx) {
+      const grid = 13;
+      const cell = Math.floor(sizePx / grid);
+      const realSize = cell * grid;
+      let hash = 2166136261;
+      for (let i = 0; i < seedText.length; i++) {
+        hash ^= seedText.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      let rects = ``;
+      for (let r = 0; r < grid; r++) {
+        for (let c = 0; c < grid; c++) {
+          // Finder corners
+          const inTL = (r < 4 && c < 4);
+          const inTR = (r < 4 && c >= grid - 4);
+          const inBL = (r >= grid - 4 && c < 4);
+          let fill = false;
+          if (inTL || inTR || inBL) {
+            const lr = r < 4 ? r : r - (grid - 4);
+            const lc = c < 4 ? c : c - (grid - 4);
+            fill = (lr === 0 || lr === 3 || lc === 0 || lc === 3 || (lr >= 1 && lr <= 2 && lc >= 1 && lc <= 2 && !(lr === 1 && lc === 2)));
+            if ((lr === 1 && lc === 1) || (lr === 1 && lc === 2) || (lr === 2 && lc === 1) || (lr === 2 && lc === 2)) {
+              fill = true;
+            }
+            if (lr === 0 || lr === 3 || lc === 0 || lc === 3) fill = true;
+          } else {
+            hash = Math.imul(hash ^ (r * 31 + c * 17), 16777619);
+            fill = (Math.abs(hash) % 10) < 5;
+          }
+          if (fill) {
+            rects += `<rect x="` + (c * cell) + `" y="` + (r * cell) + `" width="` + cell + `" height="` + cell + `" fill="currentColor" />`;
+          }
+        }
+      }
+      return `<svg xmlns="http://www.w3.org/2000/svg" width="` + realSize + `" height="` + realSize + `" viewBox="0 0 ` + realSize + ` ` + realSize + `" aria-hidden="true" style="color: var(--on-surface); border: 4px solid var(--background); outline: 1px solid var(--outline-variant); background: var(--background);">` + rects + `</svg>`;
+    }
+
+    function renderUpiQr(amount) {
+      const wrap = document.getElementById(`upi-qr-svg-wrap`);
+      if (wrap) {
+        wrap.innerHTML = buildDeterministicQrSvg(`UPI|` + appState.appId + `|` + amount, 91);
+      }
+    }
+
+    function processSimulatedPayment() {
+      if (isProcessingPayment) return;
+      isProcessingPayment = true;
+
+      const btn = document.getElementById(`btn-pay-now`);
+      const msgBox = document.getElementById(`payment-inline-msg`);
+      const msgText = document.getElementById(`payment-inline-text`);
+      if (btn) btn.disabled = true;
+      if (msgBox && msgText) {
+        msgBox.className = `notice-strip`;
+        msgBox.style.display = `flex`;
+        msgText.textContent = `Connecting to simulated clearing gateway & verifying transaction…`;
+      }
+
+      setTimeout(function() {
+        isProcessingPayment = false;
+        if (btn) btn.disabled = false;
+
+        if (!appState.submitted || appState.appId === `DRAFT`) {
+          const randNum = Math.floor(20000 + Math.random() * 79999);
+          appState.appId = `EDU-2026-` + randNum;
+        }
+
+        const calc = computeFeeBreakdown();
+        const methodLabels = {
+          upi: `UPI QR / VPA (` + ((document.getElementById(`inp-upi-id`) && document.getElementById(`inp-upi-id`).value) || `applicant@okicici`) + `)`,
+          card: `Debit / Credit Card (•••• ` + (((document.getElementById(`inp-card-num`) && document.getElementById(`inp-card-num`).value) || `9012`).slice(-4)) + `)`,
+          netbanking: `Netbanking (` + ((document.getElementById(`inp-bank-select`) && document.getElementById(`inp-bank-select`).value) || `SBI`) + `)`
+        };
+
+        const branchObj = BRANCHES.find(function(b) { return b.id === appState.applicant.branchId; });
+        const branchName = branchObj ? branchObj.name : `Computer Science & Engineering`;
+        const txnRef = `TXN-2026-` + Math.floor(100000 + Math.random() * 899999);
+        const nowStr = new Date().toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+        appState.receipt = {
+          txnRef: txnRef,
+          appId: appState.appId,
+          candidateName: appState.applicant.fullName.trim() || `Provisional Applicant`,
+          track: appState.applicant.track,
+          branch: branchName,
+          category: appState.applicant.category,
+          domicile: appState.applicant.domicile,
+          mode: methodLabels[appState.feeConfig.payMethod] || `UPI`,
+          timestamp: nowStr,
+          items: calc.items,
+          totalPaid: calc.netTotal,
+          hash: `EE-VER-` + txnRef.slice(-6) + `-` + appState.appId.slice(-5)
+        };
+
+        // Ensure tracker record reflects Fee Received
+        const existingIdx = appState.userApplications.findIndex(function(item) {
+          return item.appId === appState.appId;
+        });
+        const updatedRecord = {
+          appId: appState.appId,
+          fullName: appState.receipt.candidateName,
+          mobile: appState.applicant.mobile || `9876543210`,
+          category: appState.applicant.category,
+          domicile: appState.applicant.domicile,
+          track: appState.applicant.track,
+          branch: branchName,
+          statusStage: 4,
+          seatModel: appState.feeConfig.seatModel === `government` ? `Government Polytechnic` : `Autonomous Institute`,
+          submittedDate: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+          remarks: `Fee payment of ` + formatINR(calc.netTotal) + ` received (` + txnRef + `). Digital receipt issued.`,
+          paidAmount: calc.netTotal,
+          txnRef: txnRef,
+          isSample: false
+        };
+        if (existingIdx >= 0) {
+          appState.userApplications[existingIdx] = updatedRecord;
+        } else {
+          appState.userApplications.unshift(updatedRecord);
+        }
+        appState.lastTrackerQuery = appState.appId;
+
+        if (msgBox && msgText) {
+          msgBox.className = `notice-strip is-positive`;
+          msgText.textContent = `Transaction authorised (` + txnRef + `). Your digital receipt has been generated below.`;
+        }
+
+        renderFeeSection();
+        updateKpiStrip();
+        saveState();
+
+        const rcptEl = document.getElementById(`receipt-container`);
+        if (rcptEl) rcptEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 800);
+    }
+
+    function renderReceipt(r) {
+      const wrap = document.getElementById(`receipt-container`);
+      if (!wrap) return;
+      wrap.style.display = `block`;
+
+      const setTxt = function(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+      setTxt(`rcpt-txn-ref`, r.txnRef);
+      setTxt(`rcpt-app-id`, r.appId);
+      setTxt(`rcpt-name`, r.candidateName);
+      setTxt(`rcpt-branch`, r.track + ` — ` + r.branch);
+      setTxt(`rcpt-category`, r.category + ` · ` + r.domicile);
+      setTxt(`rcpt-mode`, r.mode);
+      setTxt(`rcpt-date`, r.timestamp);
+      setTxt(`rcpt-total-paid`, formatINR(r.totalPaid));
+      setTxt(`rcpt-hash`, r.hash);
+
+      const tbody = document.getElementById(`rcpt-items-body`);
+      if (tbody) {
+        tbody.innerHTML = r.items.map(function(item, idx) {
+          return `<tr>
+            <td class="mono-num">0` + (idx + 1) + `</td>
+            <td>` + item.label + `</td>
+            <td class="num">` + formatINR(item.amount) + `</td>
+          </tr>`;
+        }).join('');
+      }
+
+      const qrEl = document.getElementById(`rcpt-qr-svg`);
+      if (qrEl) {
+        qrEl.innerHTML = buildDeterministicQrSvg(r.txnRef + `|` + r.appId + `|` + r.totalPaid, 91);
+      }
+    }
+
+    function downloadReceiptText() {
+      const r = appState.receipt;
+      if (!r) return;
+      const lines = [
+        `EDUENROLL TECHNICAL ADMISSION PORTAL — DIGITAL FEE RECEIPT`,
+        `=============================================================`,
+        `Transaction Ref : ` + r.txnRef,
+        `Application ID  : ` + r.appId,
+        `Candidate Name  : ` + r.candidateName,
+        `Programme       : ` + r.track + ` - ` + r.branch,
+        `Category        : ` + r.category + ` (` + r.domicile + `)`,
+        `Payment Mode    : ` + r.mode,
+        `Timestamp       : ` + r.timestamp,
+        `Verification ID : ` + r.hash,
+        `-------------------------------------------------------------`,
+        `ITEMISED FEE BREAKDOWN:`
+      ];
+      r.items.forEach(function(item, idx) {
+        lines.push((idx + 1) + `. ` + item.label + ` : ` + formatINR(item.amount));
+      });
+      lines.push(`-------------------------------------------------------------`);
+      lines.push(`NET AMOUNT PAID : ` + formatINR(r.totalPaid));
+      lines.push(`=============================================================`);
+      lines.push(`Note: Present this receipt with original documents and signed UGC Anti-Ragging Affidavits at physical reporting.`);
+
+      const content = lines.join('\n');
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === 'function') {
+        window.notebookAppApi.triggerFileDownload({
+          content: content,
+          contentType: 'text/plain',
+          encoding: 'UTF-8',
+          filename: r.appId + `-fee-receipt.txt`
+        });
+      }
+    }
+
+    // =========================================================================
+    // LIVE APPLICATION TRACKER
+    // =========================================================================
+    function getAllApplications() {
+      return appState.userApplications.concat(SAMPLE_APPLICATIONS);
+    }
+
+    function renderTrackerChips() {
+      const container = document.getElementById(`tracker-sample-chips`);
+      const countTag = document.getElementById(`tracker-count-tag`);
+      if (!container) return;
+      const all = getAllApplications();
+      if (countTag) {
+        countTag.textContent = appState.userApplications.length + ` Your Submissions + ` + SAMPLE_APPLICATIONS.length + ` Sample Records`;
+      }
+      container.innerHTML = all.slice(0, 6).map(function(rec) {
+        const label = rec.isSample ? rec.appId : rec.appId + ` (Yours)`;
+        return `<button type="button" class="btn btn-secondary btn-compact mono-num" style="min-height: 36px; font-size: 0.75rem;" onclick="quickTrack('` + rec.appId + `')">` + label + `</button>`;
+      }).join('');
+    }
+
+    function quickTrack(appId) {
+      const inp = document.getElementById(`inp-tracker-query`);
+      if (inp) inp.value = appId;
+      searchApplication(appId);
+    }
+
+    function searchApplication(forcedQuery) {
+      const inp = document.getElementById(`inp-tracker-query`);
+      const query = (forcedQuery !== undefined ? forcedQuery : (inp ? inp.value : ``)).trim();
+      if (inp && forcedQuery !== undefined) inp.value = forcedQuery;
+      appState.lastTrackerQuery = query;
+
+      const panel = document.getElementById(`tracker-result-panel`);
+      if (!panel) return;
+
+      if (!query) {
+        panel.innerHTML = `<div class="notice-strip is-warning" style="margin-bottom: 0;">
+          <i data-lucide="search" width="20" height="20" class="notice-icon"></i>
+          <div>
+            <strong>Enter an Application ID or Mobile Number</strong>
+            <p class="helper-text">Use any sample ID above (e.g. EDU-2026-10482) or submit your own application in Section 01.</p>
+          </div>
+        </div>`;
+        if (window.lucide) window.lucide.createIcons();
+        return;
+      }
+
+      const norm = query.toLowerCase();
+      const match = getAllApplications().find(function(rec) {
+        return rec.appId.toLowerCase() === norm || rec.mobile === norm;
+      });
+
+      if (!match) {
+        panel.innerHTML = `<div class="notice-strip is-error" style="margin-bottom: 0;">
+          <i data-lucide="alert-circle" width="20" height="20" class="notice-icon"></i>
+          <div>
+            <strong>No application matched "` + escapeHtml(query) + `"</strong>
+            <p class="helper-text">Check the Application ID format (EDU-2026-XXXXX) or 10-digit registered mobile number, or click one of the sample records above.</p>
+          </div>
+        </div>`;
+        if (window.lucide) window.lucide.createIcons();
+        return;
+      }
+
+      const stages = [
+        { num: 1, title: `Submitted`, desc: `Online form & fee logged` },
+        { num: 2, title: `Verified`, desc: `Marks & documents checked` },
+        { num: 3, title: `Seat Allotted`, desc: `Branch & counselling confirmed` },
+        { num: 4, title: `Fee Received`, desc: `Enrolment locked & receipt issued` }
+      ];
+
+      const stageBadgeMap = {
+        1: { text: `SUBMITTED`, cls: `tag-neutral` },
+        2: { text: `DOCUMENTS VERIFIED`, cls: `tag-warning` },
+        3: { text: `SEAT ALLOTTED`, cls: `tag-warning` },
+        4: { text: `FEE RECEIVED · CONFIRMED`, cls: `tag-positive` }
+      };
+      const badge = stageBadgeMap[match.statusStage] || stageBadgeMap[1];
+
+      const timelineHtml = stages.map(function(st) {
+        const isDone = match.statusStage > st.num || (match.statusStage === 4 && st.num === 4);
+        const isCurrent = match.statusStage === st.num && match.statusStage < 4;
+        const cls = isDone ? `is-done` : (isCurrent ? `is-current` : ``);
+        const stateText = isDone ? `Completed` : (isCurrent ? `Current Stage` : `Pending`);
+        return `<div class="timeline-node ` + cls + `">
+          <span class="label-mono">Stage 0` + st.num + ` · ` + stateText + `</span>
+          <strong style="font-size: 0.9375rem;">` + st.title + `</strong>
+          <span class="helper-text">` + st.desc + `</span>
+        </div>`;
+      }).join('');
+
+      const actionBtnHtml = match.statusStage < 4
+        ? `<button type="button" class="btn btn-primary btn-compact" onclick="switchSection('payment')">
+             <span>Proceed to Fee Payment</span>
+             <i data-lucide="arrow-right" width="16" height="16"></i>
+           </button>`
+        : `<span class="carbon-tag tag-positive">Admission Provisional Seat Locked</span>`;
+
+      panel.innerHTML = `
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: var(--space-md); border-bottom: var(--rule); padding-bottom: var(--space-md);">
+          <div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm);">
+              <span class="mono-num" style="font-weight: 700; font-size: 1.125rem;">` + escapeHtml(match.appId) + `</span>
+              <span class="carbon-tag ` + badge.cls + `">` + badge.text + `</span>
+              ` + (match.isSample ? `<span class="carbon-tag tag-neutral">Sample Record</span>` : `<span class="carbon-tag">Your Submission</span>`) + `
+            </div>
+            <h3 class="subhead" style="margin-top: var(--space-xs);">` + escapeHtml(match.fullName) + `</h3>
+            <p class="helper-text">` + escapeHtml(match.track) + ` · ` + escapeHtml(match.branch) + ` · ` + escapeHtml(match.seatModel) + `</p>
+          </div>
+          <div>` + actionBtnHtml + `</div>
+        </div>
+
+        <div class="timeline-track">` + timelineHtml + `</div>
+
+        <div class="receipt-meta-grid">
+          <div>
+            <div class="label-mono">Registered Mobile</div>
+            <div class="mono-num">` + escapeHtml(match.mobile) + `</div>
+          </div>
+          <div>
+            <div class="label-mono">Category &amp; Domicile</div>
+            <div>` + escapeHtml(match.category) + ` · ` + escapeHtml(match.domicile) + `</div>
+          </div>
+          <div>
+            <div class="label-mono">Submission Date</div>
+            <div class="mono-num">` + escapeHtml(match.submittedDate) + `</div>
+          </div>
+          <div>
+            <div class="label-mono">Last Payment / Ref</div>
+            <div class="mono-num">` + formatINR(match.paidAmount) + ` (` + escapeHtml(match.txnRef) + `)</div>
+          </div>
+        </div>
+
+        <div class="notice-strip" style="margin-top: var(--space-md); margin-bottom: 0;">
+          <i data-lucide="info" width="18" height="18" class="notice-icon"></i>
+          <div>
+            <strong>Counselling Desk Note</strong>
+            <p class="helper-text" style="color: var(--on-surface);">` + escapeHtml(match.remarks) + `</p>
+          </div>
+        </div>
+      `;
+      if (window.lucide) window.lucide.createIcons();
+      saveState();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`);
+    }
+
+    // =========================================================================
+    // DEMO PREFILL & RESET CONTROLS
+    // =========================================================================
+    function prefillDemoApplicant() {
+      appState.applicant = {
+        fullName: `Siddharth Raj Verma`,
+        dob: `2007-04-12`,
+        gender: `Male`,
+        category: `OBC`,
+        domicile: `Jharkhand`,
+        aadhar: `542188903312`,
+        email: `siddharth.verma@example.com`,
+        mobile: `9835441120`,
+        guardianName: `Mahesh Prasad Verma`,
+        guardianMobile: `9431108844`,
+        track: `2-Year Lateral Entry`,
+        qualStream: `ITI Circuital`,
+        writtenScore: `82`,
+        branchId: `CSE`,
+        board10: `JAC Ranchi`,
+        pct10: `79.4`,
+        year10: `2024`,
+        mathMarks: `84`,
+        scienceMarks: `77`,
+        pct12: `85.2`,
+        declarationAccepted: true
+      };
+      simulateAllDocuments();
+      renderAll();
+      goToStep(3);
+      saveState();
+    }
+
+    function handleResetPortal(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.innerHTML = `<i data-lucide="alert-triangle" width="16" height="16"></i><span>Click Again to Confirm Reset</span>`;
+        if (window.lucide) window.lucide.createIcons();
+        setTimeout(function() {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.innerHTML = `<i data-lucide="rotate-ccw" width="16" height="16"></i><span>Reset Form</span>`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        }, 4000);
+        return;
+      }
+
+      btn.dataset.armed = `false`;
+      btn.innerHTML = `<i data-lucide="rotate-ccw" width="16" height="16"></i><span>Reset Form</span>`;
+      const savedUserApps = appState.userApplications || [];
+      appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      appState.userApplications = savedUserApps;
+      renderAll();
+      switchSection(`admission`);
+      goToStep(1);
+      saveState();
+    }
+
+    // =========================================================================
+    // FULL SYNC & KPI BAR RENDERING
+    // =========================================================================
+    function updateKpiStrip() {
+      const a = appState.applicant;
+      const calc = computeFeeBreakdown();
+      const ev = evaluateEligibility();
+      const branchObj = BRANCHES.find(function(b) { return b.id === a.branchId; });
+
+      const setTxt = function(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      setTxt(`kpi-app-id`, appState.appId);
+      setTxt(`kpi-app-status`, appState.receipt
+        ? `Fee Paid (` + appState.receipt.txnRef + `)`
+        : (appState.submitted ? `Submitted · Awaiting Payment` : `Step ` + appState.currentStep + ` of 4 in progress`)
+      );
+      setTxt(`kpi-track`, a.track);
+      setTxt(`kpi-branch`, branchObj ? branchObj.name : `Branch not selected`);
+      setTxt(`kpi-eligibility`, ev.verdict);
+      setTxt(`kpi-eligibility-sub`, ev.verdict === `Eligible`
+        ? `Meets ` + a.track + ` norms`
+        : (ev.verdict === `Not Eligible` ? `Check flagged criteria` : `Enter Class 10 / 12 / ITI scores`)
+      );
+      setTxt(`kpi-fee`, formatINR(calc.netTotal));
+      setTxt(`kpi-fee-sub`, (appState.feeConfig.paymentType === `application` ? `Application Fee · ` : `Annual Seat Fee · `) + a.category);
+    }
+
+    function syncInputsFromState() {
+      const a = appState.applicant;
+      const setVal = function(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.value = val || ``;
+      };
+      setVal(`inp-fullname`, a.fullName);
+      setVal(`inp-dob`, a.dob);
+      setVal(`inp-gender`, a.gender);
+      setVal(`inp-category`, a.category || `General`);
+      setVal(`inp-domicile`, a.domicile || `Jharkhand`);
+      setVal(`inp-aadhar`, (a.aadhar || ``).replace(/(\d{4})(?=\d)/g, '$1 '));
+      setVal(`inp-email`, a.email);
+      setVal(`inp-mobile`, a.mobile);
+      setVal(`inp-guardian`, a.guardianName);
+      setVal(`inp-guardian-mobile`, a.guardianMobile);
+      setVal(`inp-qual-stream`, a.qualStream);
+      setVal(`inp-written-score`, a.writtenScore);
+      setVal(`inp-board10`, a.board10);
+      setVal(`inp-pct10`, a.pct10);
+      setVal(`inp-year10`, a.year10 || `2026`);
+      setVal(`inp-math`, a.mathMarks);
+      setVal(`inp-science`, a.scienceMarks);
+      setVal(`inp-pct12`, a.pct12);
+
+      const chkDecl = document.getElementById(`chk-declaration`);
+      if (chkDecl) chkDecl.checked = !!a.declarationAccepted;
+
+      const btnDip = document.getElementById(`track-diploma`);
+      const btnLat = document.getElementById(`track-lateral`);
+      if (btnDip) btnDip.classList.toggle(`is-selected`, a.track === `3-Year Diploma`);
+      if (btnLat) btnLat.classList.toggle(`is-selected`, a.track === `2-Year Lateral Entry`);
+      const latBox = document.getElementById(`lateral-pathway-box`);
+      if (latBox) latBox.style.display = (a.track === `2-Year Lateral Entry`) ? `block` : `none`;
+    }
+
+    function renderAll() {
+      syncInputsFromState();
+      renderBranchCards();
+      syncAcademicStepLabels();
+      evaluateEligibility();
+      renderUploadRows();
+      renderFeeSection();
+      renderTrackerChips();
+      updateKpiStrip();
+      goToStep(appState.currentStep || 1);
+      switchSection(appState.activeSection || `admission`);
+    }
+
+    // Boot portal
+    document.addEventListener('DOMContentLoaded', initPortal);
+  </script>
+</body>
+</html>

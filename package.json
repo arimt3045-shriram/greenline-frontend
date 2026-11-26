@@ -1,0 +1,8 @@
+{
+  "name": "polytechnic-admission-portal-frontend",
+  "version": "3.0.0",
+  "description": "Polytechnic & Engineering Admission Portal 2026-27 Frontend for Vercel (Updated Helpline 9456890266)",
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
